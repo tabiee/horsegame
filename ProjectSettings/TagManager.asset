@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 2850707331
+    locked: 0
+  - name: Environment
+    uniqueID: 3748722805
+    locked: 0
+  - name: Interactable
+    uniqueID: 2797592423
+    locked: 0
+  - name: Collision
+    uniqueID: 3650485755
+    locked: 0
