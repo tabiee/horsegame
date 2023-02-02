@@ -111,52 +111,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!1 &1224213972
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1224213973}
-  - component: {fileID: 1224213974}
-  m_Layer: 0
-  m_Name: FlashlightContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1224213973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224213972}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1457115537}
-  m_Father: {fileID: 1802467381757106148}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1224213974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224213972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac40434d63d7e744bbcdc247390d590c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightSource: {fileID: 1457115536}
 --- !u!1 &1457115536
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1457115537}
   - component: {fileID: 1457115538}
+  - component: {fileID: 2398821387627637566}
   m_Layer: 0
   m_Name: FlashLight
   m_TagString: Untagged
@@ -181,13 +136,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457115536}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1224213973}
-  m_RootOrder: 0
+  m_Father: {fileID: 1802467381757106148}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1457115538
 MonoBehaviour:
@@ -268,6 +223,18 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &2398821387627637566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457115536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e47ec114fd89f49abf835b2989524e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1802467381757106171
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,9 +245,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1802467381757106148}
   - component: {fileID: 1802467381757106149}
-  - component: {fileID: 1802467381757106170}
   - component: {fileID: 1847651731}
   - component: {fileID: 1847651733}
+  - component: {fileID: 2654425811453585709}
   m_Layer: 0
   m_Name: hero-idle-front
   m_TagString: Untagged
@@ -301,7 +268,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 431262060}
-  - {fileID: 1224213973}
+  - {fileID: 1457115537}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -357,19 +324,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1802467381757106170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802467381757106171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76f3144d26b6e094c9c5cf66ba706108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1
 --- !u!50 &1847651731
 Rigidbody2D:
   serializedVersion: 4
@@ -407,3 +361,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.093807496}
   serializedVersion: 2
   m_Radius: 0.0661925
+--- !u!114 &2654425811453585709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802467381757106171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3f6ab526d8521744accc8fe615034bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 1
+  rotationSpeed: 720
+  lookDirection: {x: 0, y: 0, z: 0, w: 0}
