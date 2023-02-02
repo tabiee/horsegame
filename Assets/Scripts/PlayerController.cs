@@ -68,15 +68,7 @@ public class PlayerController : MonoBehaviour
         relativeRotation = Mathf.Clamp(relativeRotation, 40, -40);
         Quaternion clampedRotation = Quaternion.Euler(0, 0, relativeRotation);
 
-        if(parentTransform.rotation != parentTransform.rotation)
-        {
-            lightSource.transform.rotation = fullRotation;
-        }
-        else
-        {
-            lightSource.transform.rotation = clampedRotation;
-        }
-
+        lightSource.transform.rotation = clampedRotation;
 
         Debug.Log("direction: " + lightDirection);
         Debug.Log("parentTranfsorm.fwd: " + parentTransform.forward);
