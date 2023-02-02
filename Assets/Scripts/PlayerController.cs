@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         SetPlayerVelocity();
         RotateInDirectionOfInput();
-        PointFlashLightAtMouse();
+        //PointFlashLightAtMouse();
     }
 
     private void SetPlayerVelocity()
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PointFlashLightAtMouse()
+    /*private void PointFlashLightAtMouse()
     {
 
         Vector3 mousePosition = Input.mousePosition;
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("direction: " + lightDirection);
         Debug.Log("Clamped.eul.z: " + clampedRotation.eulerAngles.z);
         Debug.Log("light: " + lightSource.transform.rotation.eulerAngles.z);
-    }
+    }*/
 
     private void OnMove(InputValue inputValue) //Automatic method to collect stuff from new inputsystem, onMove is a Unity EventTrigger
     {
