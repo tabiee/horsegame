@@ -10,19 +10,22 @@ public class RayInteraction : MonoBehaviour
 
     void Update()
     {
-        //Ray mousePos = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-
-        Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //grab mouse position
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = mousePos - (Vector2)transform.position;
 
+        //show the ray
         Debug.DrawRay(transform.position, dir.normalized, Color.red, 0.1f, false);
 
-        hitData = Physics2D.Raycast((Vector2)transform.position, dir.normalized, distance, interactionLayer);
+        //shoot a ray from player position to mouse position, only hit the specified layer
+        hitData = Physics2D.Raycast(transform.position, dir.normalized, distance, interactionLayer);
 
+        //if it hit something, run stuff
         if (hitData.collider != null)
         {
             Debug.Log(hitData.collider.gameObject.name);
+
+            //get the inherited interface from the hit object
             var interactedObject = hitData.transform.GetComponent<IInteractable>();
 
             if (interactedObject != null)
@@ -30,6 +33,7 @@ public class RayInteraction : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     Debug.Log("E pressed!");
+                    //use the method from the object, regardless of which script is using that method
                     interactedObject.Interact();
                 }
             }

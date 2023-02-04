@@ -8,12 +8,14 @@ public class LightCheck : MonoBehaviour
     [SerializeField] private AIPath aiPath;
     [SerializeField] private bool inLight;
     [SerializeField] private float scitterSpeed = 0.5f;
+    [SerializeField] private float sideSpeed = 3f;
 
     private void Update()
     {
         if (inLight)
         {
-            aiPath.transform.localPosition += (transform.right * 2f + transform.up) * Time.deltaTime * scitterSpeed;
+            //move right and forward from local space when in light
+            aiPath.transform.localPosition += (transform.right * sideSpeed + transform.up * scitterSpeed) * Time.deltaTime;
         }
     }
 
@@ -21,11 +23,14 @@ public class LightCheck : MonoBehaviour
     {
         if (other.GetComponent<AIPath>() != null && other.name == "evil")
         {
+            //if in light, hide sprite, change bool that does speed and show splash sprite
             aiPath = other.GetComponent<AIPath>();
             Debug.Log("Kelpie is in the cone!");
             inLight = true;
 
             other.GetComponent<AIPath>().enabled = false;
+            other.GetComponent<SpriteRenderer>().enabled = false;
+            other.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 
@@ -37,6 +42,8 @@ public class LightCheck : MonoBehaviour
             inLight = false;
 
             other.GetComponent<AIPath>().enabled = true;
+            other.GetComponent<SpriteRenderer>().enabled = true;
+            other.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }
