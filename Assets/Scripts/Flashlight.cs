@@ -5,6 +5,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
     public Transform playerTransform;
+    public float lightAngle = 40; //total area is lightAngle*2
 
     void Update()
     {
@@ -16,7 +17,7 @@ public class Flashlight : MonoBehaviour
 
         // Limits rotation in 40 degrees left and right facing forward
         float angle = Vector2.SignedAngle(playerTransform.up, direction);
-        angle = Mathf.Clamp(angle, -40, 40);
+        angle = Mathf.Clamp(angle, -lightAngle, lightAngle);
 
         //Apply clamped rotation
         gameObject.transform.localRotation = Quaternion.Euler(0, 0, angle);
