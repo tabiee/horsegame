@@ -16,18 +16,34 @@ public class LightCheck : MonoBehaviour
     public LayerMask playerLayer;
     public float distance = 25f;
 
+    private bool once = false;
+    private int random;
+
     private void Update()
     {
         ShadowCheck();
-
+        //is it in light and not behind anything?
         if (inLight && ShadowCheck() == true)
         {
-            //is it behind something?
-
-            //move right and forward from local space when in light
-            aiPath.transform.localPosition += (transform.right * sideSpeed + transform.up * scitterSpeed) * Time.deltaTime;
-
-
+            if (once == false)
+            {
+                once = true;
+                random = Random.Range(0, 2);
+            }
+            var playerDir = aiPath.transform.localPosition - transform.parent.position;
+            switch (random)
+            {
+                case 0:
+                    //move right and forward from local space when in light
+                    aiPath.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+                case 1:
+                    aiPath.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+                case 2:
+                    aiPath.transform.localPosition += (-transform.right * sideSpeed + playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+            }
             aiPath.GetComponent<AIPath>().enabled = false;
             aiPath.GetComponent<SpriteRenderer>().enabled = false;
             aiPath.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
@@ -35,6 +51,7 @@ public class LightCheck : MonoBehaviour
         }
         else if (hitData.collider != null)
         {
+            once = false;
             aiPath.GetComponent<AIPath>().enabled = true;
             aiPath.GetComponent<SpriteRenderer>().enabled = true;
             aiPath.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
