@@ -6,13 +6,13 @@ public class LightAlt : MonoBehaviour
 {
     [SerializeField] private MovementAlt moveAlt;
     [SerializeField] private float slowedSpeed = 0.3f;
-    private SpriteRenderer sprite;
-    public Animator animator;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Animator animator;
     private void Awake()
     {
         moveAlt = GetComponentInParent<MovementAlt>();
-        animator = transform.parent.GetComponentInChildren<Animator>();
-        sprite = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
+        animator = transform.GetComponentInParent<Animator>();
+        sprite = transform.GetComponentInParent<SpriteRenderer>();
     }
     void Update()
     {

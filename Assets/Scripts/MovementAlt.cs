@@ -8,8 +8,6 @@ public class MovementAlt : MonoBehaviour
     public float defaultSpeed;
     public Vector2 moveDir;
     [SerializeField] private Rigidbody2D rb;
-
-
     [SerializeField] private Vector2 latestDir;
 
     private void Awake()
