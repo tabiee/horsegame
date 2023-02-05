@@ -29,7 +29,7 @@ public class LightAlt : MonoBehaviour
         //draw a line from the direction of movement to mouse direction and see wtf is up
         if (Vector2.Dot(moveAlt.moveDir.normalized, mouseDir.normalized) < 0)
         {
-            Debug.Log("Opposite mouse");
+            //Debug.Log("Opposite mouse");
             moveAlt.moveSpeed = slowedSpeed;
         }
         else
@@ -41,7 +41,7 @@ public class LightAlt : MonoBehaviour
         if (angleZ >= 0 && angleZ <= 180)
         {
             //Debug.Log(angleZ);
-            Debug.Log("Left Side");
+            //Debug.Log("Left Side");
         }
 
 
@@ -58,7 +58,7 @@ public class LightAlt : MonoBehaviour
             sprite.flipX = false;
         }
 
-        Debug.Log("mouseDir is " + mouseDir);
+        //Debug.Log("mouseDir is " + mouseDir);
 
 
         //saving this in case i need it at some point

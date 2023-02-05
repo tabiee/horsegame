@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RayInteraction : MonoBehaviour
 {
-    public RaycastHit2D hitData;
-    public LayerMask interactionLayer;
-    public float distance = 10f;
+    [SerializeField] private RaycastHit2D hitData;
+    [SerializeField] private LayerMask interactionLayer;
+    [SerializeField] private float distance = 0.4f;
 
     void Update()
     {
