@@ -8,7 +8,7 @@ public class MovementAlt : MonoBehaviour
     public float defaultSpeed;
     public Vector2 moveDir;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Vector2 latestDir;
+    public Vector2 latestDir;
 
     private void Awake()
     {
@@ -28,6 +28,8 @@ public class MovementAlt : MonoBehaviour
     }
     void ProcessInputs()
     {
+        Debug.Log("LatestDir is: " + latestDir);
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 

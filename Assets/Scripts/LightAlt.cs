@@ -8,13 +8,23 @@ public class LightAlt : MonoBehaviour
     [SerializeField] private float slowedSpeed = 0.3f;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
+    [SerializeField] private Vector2 mouseDir;
     private void Awake()
     {
+        //grab everything i need from the sprite object
         moveAlt = GetComponentInParent<MovementAlt>();
         animator = transform.GetComponentInParent<Animator>();
         sprite = transform.GetComponentInParent<SpriteRenderer>();
     }
     void Update()
+    {
+        //run animations
+        Animate();
+
+        //handle light rotation & movement speed
+        RotateLight();
+    }
+    void RotateLight()
     {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -24,7 +34,7 @@ public class LightAlt : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(Vector3.forward, lightDirection);
 
         //get mouse direction by getting it's position and converting from world to local space
-        Vector2 mouseDir = transform.parent.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        mouseDir = transform.parent.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
         //draw a line from the direction of movement to mouse direction and see wtf is up
         if (Vector2.Dot(moveAlt.moveDir.normalized, mouseDir.normalized) < 0)
@@ -43,8 +53,9 @@ public class LightAlt : MonoBehaviour
             //Debug.Log(angleZ);
             //Debug.Log("Left Side");
         }
-
-
+    }
+    void Animate()
+    {
         animator.SetFloat("Horizontal", mouseDir.x);
         animator.SetFloat("Vertical", mouseDir.y);
         animator.SetFloat("Speed", moveAlt.moveDir.sqrMagnitude);
@@ -57,33 +68,5 @@ public class LightAlt : MonoBehaviour
         {
             sprite.flipX = false;
         }
-
-        //Debug.Log("mouseDir is " + mouseDir);
-
-
-        //saving this in case i need it at some point
-
-        /* Vector3 mousePosition = Input.mousePosition;
-         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-         //mousePosition.z = 0;
-
-         Vector3 lightDirection = (mousePosition - transform.position).normalized;
-
-         transform.rotation = Quaternion.LookRotation(Vector3.forward, lightDirection);
-
-         //calculate the Y and X position of the mouse relative to the player rotation
-         float mouseY = transform.parent.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)).y - transform.parent.localRotation.y;
-         float mouseX = transform.parent.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)).x - transform.parent.localRotation.x;
-
-         //checks mouse position relative to player rotation is "above" and "not too far left" and "not too far right"
-         if (mouseY > 0 && mouseX > -0.45 && mouseX < 0.45)
-         {
-             Debug.Log("Up of player!");
-         }
-         //testing to check if mouse position is "below"
-         if (mouseY < 0)
-         {
-             Debug.Log("Down of player!");
-         } */
     }
 }

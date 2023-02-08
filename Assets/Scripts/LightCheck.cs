@@ -34,7 +34,7 @@ public class LightCheck : MonoBehaviour
             switch (random)
             {
                 case 0:
-                    //move right and forward from local space when in light
+                    //move right (x) and forward from local space when in light
                     aiPath.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
                     break;
                 case 1:
