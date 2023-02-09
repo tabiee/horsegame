@@ -28,7 +28,7 @@ public class MovementAlt : MonoBehaviour
     }
     void ProcessInputs()
     {
-        Debug.Log("LatestDir is: " + latestDir);
+        //Debug.Log("LatestDir is: " + latestDir);
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
