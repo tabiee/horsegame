@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         RotateInDirectionOfInput();
     }
 
-    public void GetTileInfo()
+    private void GetTileInfo()
     {
         Vector3Int playerTilePosition = tilemap.WorldToCell(transform.position);
 
