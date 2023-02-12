@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
     // Opting for diagonal movement, so Vertical for forward, backwards
     // A & D for rotation
 
-    public float movementSpeed = 1f;
+    private float movementSpeed;
+    public float defaultSpeed = 1f;
+    public float waterSpeedMultiplier = 0.25f;
+    public float bushSpeedMultiplier = 0.5f;
     public float rotationSpeed = 720f; //2 full circles per 1unit ingame?
 
     private Rigidbody2D playerRb;
     public GameObject lightSource;
+    public Tilemap tilemap;
 
     private Vector2 movementInput;
     private Vector2 smoothedMovementInput;
@@ -32,8 +37,35 @@ public class PlayerController : MonoBehaviour
         RotateInDirectionOfInput();
     }
 
+    public void GetTileInfo()
+    {
+        Vector3Int playerTilePosition = tilemap.WorldToCell(transform.position);
+
+        //Apply speed modifier: Grass is tile _223, water _78, bush _189
+
+        TileBase playerTile = tilemap.GetTile(playerTilePosition);
+        if (playerTile != null)
+        {
+            if (playerTile.name.Contains("78"))
+            {
+                movementSpeed = defaultSpeed * waterSpeedMultiplier;
+            }
+            else if (playerTile.name.Contains("189"))
+            {
+                movementSpeed = defaultSpeed * bushSpeedMultiplier;
+            }
+            else
+            {
+                movementSpeed = defaultSpeed;
+            }
+        }
+    }
+
     private void SetPlayerVelocity()
     {
+
+        GetTileInfo();
+
         //Makes it less jerky, starts with itself? takes the input from OnMove(), references its speed, and add time interval if change in seconds.
         smoothedMovementInput = Vector2.SmoothDamp(smoothedMovementInput, movementInput, ref movementInputSmoothVelocity, 0.1f);
         playerRb.velocity = smoothedMovementInput * movementSpeed;
