@@ -7,3 +7,7 @@ public interface IInteractable
 {
     void Interact();
 }
+public interface IEventRunner
+{
+    void RunEvent();
+}

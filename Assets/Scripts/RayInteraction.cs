@@ -7,7 +7,6 @@ public class RayInteraction : MonoBehaviour
     [SerializeField] private RaycastHit2D hitData;
     [SerializeField] private LayerMask interactionLayer;
     [SerializeField] private float distance = 0.4f;
-
     void Update()
     {
         //grab mouse position
@@ -26,15 +25,18 @@ public class RayInteraction : MonoBehaviour
             Debug.Log(hitData.collider.gameObject.name);
 
             //get the inherited interface from the hit object
-            var interactedObject = hitData.transform.GetComponent<IInteractable>();
-
-            if (interactedObject != null)
+            Component[] interactedObjects = hitData.transform.GetComponents(typeof(IInteractable));
+            foreach (IInteractable interactedObject in interactedObjects)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+
+                if (interactedObject != null)
                 {
-                    Debug.Log("E pressed!");
-                    //use the method from the object, regardless of which script is using that method
-                    interactedObject.Interact();
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        Debug.Log("E pressed!");
+                        //use the method from the object, regardless of which script is using that method
+                        interactedObject.Interact();
+                    }
                 }
             }
         }
