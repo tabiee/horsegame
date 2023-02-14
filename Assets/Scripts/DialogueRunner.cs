@@ -15,11 +15,12 @@ public class DialogueRunner : MonoBehaviour
     public string[] lines;
 
     //refs to object for activation/deactivation
-    [Header("Player Scripts")]
+    [Header("Scripts & Buttons")]
     [SerializeField] private RayInteraction rayInt;
     [SerializeField] private MovementAlt move;
     [SerializeField] private Button choiceButton1;
     [SerializeField] private Button choiceButton2;
+    [SerializeField] private Image image;
 
     //the LoadDialogue you interact with will load these values into here if multiple choice is available
     [Header("Choice Values")]
@@ -43,7 +44,6 @@ public class DialogueRunner : MonoBehaviour
             else
             {
                 //if text wasnt complete but you pressed E, make it complete instantly
-                Debug.Log("Stop text ran!");
                 StopAllCoroutines();
                 textGUI.text = lines[index];
             }
@@ -51,7 +51,6 @@ public class DialogueRunner : MonoBehaviour
     }
     public void StartDialogue()
     {
-        Debug.Log("Dialogue Start ran!");
         textGUI.text = string.Empty;
         index = 0;
         StartCoroutine(TypeLine());
@@ -79,7 +78,7 @@ public class DialogueRunner : MonoBehaviour
         {
             //if there is no multi choice, end dialogue and let player move
             //and run any event if available from reference
-            if (choiceLines1 == null)
+            if (choiceLines1.Length == 0)
             {
                 Invoke("EnablePlayer", 0.1f);
                 textGUI.text = string.Empty;
@@ -87,7 +86,6 @@ public class DialogueRunner : MonoBehaviour
                 if (eventObject != null)
                 {
                     eventObject.transform.GetComponent<IEventRunner>().RunEvent();
-                    Debug.Log("eventObject is not null!");
                 }
             }
             //if there IS multi choice, give choice buttons and wait
@@ -110,6 +108,7 @@ public class DialogueRunner : MonoBehaviour
     public void EnablePlayer()
     {
         textBox.gameObject.SetActive(false);
+        image.gameObject.SetActive(false);
         rayInt.enabled = true;
         move.enabled = true;
     }
@@ -134,7 +133,6 @@ public class DialogueRunner : MonoBehaviour
     }
     void ResetChoice()
     {
-        choiceLines1 = null;
-        choiceLines2 = null;
+        System.Array.Resize(ref choiceLines1, choiceLines1.Length - choiceLines1.Length);
     }
 }

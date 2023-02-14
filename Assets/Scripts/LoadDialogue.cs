@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class LoadDialogue : MonoBehaviour, IInteractable
 {
     [Header("Text Values")]
     public string[] lines;
+    [SerializeField] private Sprite artSprite;
     private GameObject playerDialogue;
     private GameObject playerTextbox;
+    private Image loadSprite;
 
     [Header("Player Scripts")]
     private RayInteraction rayInt;
@@ -32,30 +35,37 @@ public class LoadDialogue : MonoBehaviour, IInteractable
         dialogueRun = playerTextbox.transform.Find("Text").GetComponent<DialogueRunner>();
         buttonSelect1 = playerDialogue.transform.Find("Choice1").GetComponentInChildren<TextMeshProUGUI>();
         buttonSelect2 = playerDialogue.transform.Find("Choice2").GetComponentInChildren<TextMeshProUGUI>();
+        loadSprite = playerDialogue.transform.Find("Image").GetComponent<Image>();
     }
     public void Interact()
     {
         DisablePlayer();
         Debug.Log("I've been interacted with!");
         gameObject.GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-        if (choiceLines1 == null)
+        if (choiceLines1.Length == 0)
         {
             ActivateDialogue();
+            Debug.Log("Solo active!");
         }
         else
         {
             ActivateMultiDialogue();
+            Debug.Log("Multi active!");
         }
     }
     public void ActivateDialogue()
     {
         playerTextbox.SetActive(true);
+        loadSprite.gameObject.SetActive(true);
+        loadSprite.sprite = artSprite;
         dialogueRun.lines = lines;
         dialogueRun.StartDialogue();
     }
     public void ActivateMultiDialogue()
     {
         playerTextbox.SetActive(true);
+        loadSprite.gameObject.SetActive(true);
+        loadSprite.sprite = artSprite;
         dialogueRun.lines = lines;
         dialogueRun.choiceLines1 = choiceLines1;
         dialogueRun.choiceLines2 = choiceLines2;
