@@ -22,7 +22,7 @@ public class RayInteraction : MonoBehaviour
         //if it hit something, run stuff
         if (hitData.collider != null)
         {
-            Debug.Log(hitData.collider.gameObject.name);
+            //Debug.Log(hitData.collider.gameObject.name);
 
             //get the inherited interface from the hit object
             Component[] interactedObjects = hitData.transform.GetComponents(typeof(IInteractable));
@@ -33,7 +33,7 @@ public class RayInteraction : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        Debug.Log("E pressed!");
+                        //Debug.Log("E pressed!");
                         //use the method from the object, regardless of which script is using that method
                         interactedObject.Interact();
                     }

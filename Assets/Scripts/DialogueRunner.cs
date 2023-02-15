@@ -33,7 +33,7 @@ public class DialogueRunner : MonoBehaviour
     public GameObject eventObject;
     void Update()
     {
-        Debug.Log(eventObject);
+        //Debug.Log(eventObject);
         if (Input.GetKeyDown(KeyCode.E) && choicePause == false)
         {
             //if text is complete, go to next line

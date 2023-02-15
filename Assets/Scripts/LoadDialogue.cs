@@ -40,17 +40,13 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     public void Interact()
     {
         DisablePlayer();
-        Debug.Log("I've been interacted with!");
-        gameObject.GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         if (choiceLines1.Length == 0)
         {
             ActivateDialogue();
-            Debug.Log("Solo active!");
         }
         else
         {
             ActivateMultiDialogue();
-            Debug.Log("Multi active!");
         }
     }
     public void ActivateDialogue()
