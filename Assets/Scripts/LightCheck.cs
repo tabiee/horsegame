@@ -19,11 +19,14 @@ public class LightCheck : MonoBehaviour
     private bool once = false;
     private int random;
 
+    public bool toggle = false;
+
     private void Update()
     {
         ShadowCheck();
         //is it in light and not behind anything?
-        if (inLight && ShadowCheck() == true)
+
+        if (inLight && ShadowCheck() == true && toggle == true)
         {
             if (once == false)
             {
@@ -56,8 +59,8 @@ public class LightCheck : MonoBehaviour
             aiPath.GetComponent<SpriteRenderer>().enabled = true;
             aiPath.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
-    }
 
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

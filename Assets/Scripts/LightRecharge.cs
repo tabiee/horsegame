@@ -28,7 +28,7 @@ public class LightRecharge : MonoBehaviour
                 slider.gameObject.SetActive(true);
                 ringLight.enabled = false;
                 coneLight.enabled = true;
-                lightCheck.enabled = true;
+                lightCheck.toggle = true;
                 heat++;
             }
             else
@@ -38,7 +38,7 @@ public class LightRecharge : MonoBehaviour
                     ringLight.enabled = true;
                 }
                 coneLight.enabled = false;
-                lightCheck.enabled = false;
+                lightCheck.toggle = false;
                 if (heat > 0f)
                 {
                     heat--;
@@ -56,7 +56,7 @@ public class LightRecharge : MonoBehaviour
 
             ringLight.enabled = false;
             coneLight.enabled = false;
-            lightCheck.enabled = false;
+            lightCheck.toggle = false;
             slider.gameObject.SetActive(false);
         }
     }
