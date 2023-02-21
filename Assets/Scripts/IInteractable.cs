@@ -10,4 +10,6 @@ public interface IInteractable
 public interface IEventRunner
 {
     void RunEvent();
+
+    //void ConditionEvent();
 }

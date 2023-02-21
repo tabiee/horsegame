@@ -25,12 +25,14 @@ public class DialogueRunner : MonoBehaviour
     //the LoadDialogue you interact with will load these values into here if multiple choice is available
     [Header("Choice Values")]
     [SerializeField] private bool choicePause = false;
+    [SerializeField] private bool choiceComplete = false;
     public string[] choiceLines1;
     public string[] choiceLines2;
 
     //if an object you interact with has an event after the dialogue, it will be loaded into here for reference
     [Header("Event Values")]
     public GameObject eventObject;
+    public GameObject choiceEvent;
     void Update()
     {
         //Debug.Log(eventObject);
@@ -87,6 +89,10 @@ public class DialogueRunner : MonoBehaviour
                 {
                     eventObject.transform.GetComponent<IEventRunner>().RunEvent();
                 }
+                if (choiceEvent != null && choiceComplete == true)
+                {
+                    choiceEvent.transform.GetComponent<IEventRunner>().RunEvent();
+                }
             }
             //if there IS multi choice, give choice buttons and wait
             else
@@ -116,6 +122,7 @@ public class DialogueRunner : MonoBehaviour
     {
         //load the correct shit and continue normal dialogue procedures
         choicePause = false;
+        choiceComplete = true;
         choiceButton1.gameObject.SetActive(false);
         choiceButton2.gameObject.SetActive(false);
         lines = choiceLines1;
@@ -125,6 +132,7 @@ public class DialogueRunner : MonoBehaviour
     public void LoadChoice2()
     {
         choicePause = false;
+        choiceComplete = true;
         choiceButton1.gameObject.SetActive(false);
         choiceButton2.gameObject.SetActive(false);
         lines = choiceLines2;

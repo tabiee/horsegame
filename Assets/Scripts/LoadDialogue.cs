@@ -25,6 +25,11 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     public string[] choiceLines2;
     public string selectText1;
     public string selectText2;
+
+    [Header("Condition Values (Optional)")]
+    public string[] condLines;
+    public bool conditionTog = false;
+    public GameObject untiedEvent;
     public void Start()
     {
         //grab all the player things
@@ -40,13 +45,38 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     public void Interact()
     {
         DisablePlayer();
-        if (choiceLines1.Length == 0)
+        //if there's no condition, load normal dialogue
+        if (condLines == null)
         {
-            ActivateDialogue();
+            //if there's no choice, load single dialogue
+            if (choiceLines1.Length == 0)
+            {
+                ActivateDialogue();
+            }
+            //else load multiple dialogues
+            else
+            {
+                ActivateMultiDialogue();
+            }
         }
+        //else check if condition is true
+        else if (conditionTog == true)
+        {
+            ActivateCondDialogue();
+        }
+        //if condition isnt fulfilled, run normal dialogue
         else
         {
-            ActivateMultiDialogue();
+            //if there's no choice, load single dialogue
+            if (choiceLines1.Length == 0)
+            {
+                ActivateDialogue();
+            }
+            //else load multiple dialogues
+            else
+            {
+                ActivateMultiDialogue();
+            }
         }
     }
     public void ActivateDialogue()
@@ -67,6 +97,14 @@ public class LoadDialogue : MonoBehaviour, IInteractable
         dialogueRun.choiceLines2 = choiceLines2;
         buttonSelect1.text = selectText1;
         buttonSelect2.text = selectText2;
+        dialogueRun.StartDialogue();
+    }
+    public void ActivateCondDialogue()
+    {
+        playerTextbox.SetActive(true);
+        loadSprite.gameObject.SetActive(true);
+        loadSprite.sprite = artSprite;
+        dialogueRun.lines = condLines;
         dialogueRun.StartDialogue();
     }
     public void DisablePlayer()
