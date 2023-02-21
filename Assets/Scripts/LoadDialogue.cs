@@ -26,10 +26,11 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     public string selectText1;
     public string selectText2;
 
-    [Header("Condition Values (Optional)")]
+    [Header("Condition & Event Values (Optional)")]
     public string[] condLines;
     public bool conditionTog = false;
     public GameObject untiedEvent;
+    public GameObject untiedChoiceEvent;
     public void Start()
     {
         //grab all the player things
@@ -45,8 +46,9 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     public void Interact()
     {
         DisablePlayer();
+        Activation();
         //if there's no condition, load normal dialogue
-        if (condLines == null)
+        if (condLines.Length == 0)
         {
             //if there's no choice, load single dialogue
             if (choiceLines1.Length == 0)
@@ -81,17 +83,11 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     }
     public void ActivateDialogue()
     {
-        playerTextbox.SetActive(true);
-        loadSprite.gameObject.SetActive(true);
-        loadSprite.sprite = artSprite;
         dialogueRun.lines = lines;
         dialogueRun.StartDialogue();
     }
     public void ActivateMultiDialogue()
     {
-        playerTextbox.SetActive(true);
-        loadSprite.gameObject.SetActive(true);
-        loadSprite.sprite = artSprite;
         dialogueRun.lines = lines;
         dialogueRun.choiceLines1 = choiceLines1;
         dialogueRun.choiceLines2 = choiceLines2;
@@ -101,15 +97,30 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     }
     public void ActivateCondDialogue()
     {
-        playerTextbox.SetActive(true);
-        loadSprite.gameObject.SetActive(true);
-        loadSprite.sprite = artSprite;
         dialogueRun.lines = condLines;
         dialogueRun.StartDialogue();
     }
     public void DisablePlayer()
     {
+        move.rb.velocity = Vector2.zero;
+        move.moveDir.x = 0;
+        move.moveDir.y = 0;
         rayInt.enabled = false;
         move.enabled = false;
+    }
+    public void Activation()
+    {
+        playerTextbox.SetActive(true);
+        loadSprite.gameObject.SetActive(true);
+        loadSprite.sprite = artSprite;
+
+        if (choiceLines1.Length != 0 && untiedEvent != null)
+        {
+            dialogueRun.eventObject = untiedEvent;
+        }
+        if (condLines.Length != 0 && untiedChoiceEvent != null)
+        {
+            dialogueRun.choiceEvent = untiedChoiceEvent;
+        }
     }
 }

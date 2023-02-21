@@ -38,6 +38,8 @@ public class DialogueRunner : MonoBehaviour
         //Debug.Log(eventObject);
         if (Input.GetKeyDown(KeyCode.E) && choicePause == false)
         {
+            Debug.Log("E press in DialRun!");
+
             //if text is complete, go to next line
             if (textGUI.text == lines[index])
             {
@@ -68,6 +70,7 @@ public class DialogueRunner : MonoBehaviour
     }
     void NextLine()
     {
+        Debug.Log("index: " + index + " && " + "lines.length: " + lines.Length);
         //if there are more lines left, count down 1 line and continue the text typing
         if (index < lines.Length - 1)
         {
@@ -126,7 +129,10 @@ public class DialogueRunner : MonoBehaviour
         choiceButton1.gameObject.SetActive(false);
         choiceButton2.gameObject.SetActive(false);
         lines = choiceLines1;
-        StartDialogue();
+        index = 0;
+        textGUI.text = lines[index];
+        //StartCoroutine(TypeLine());
+        //StartDialogue();
         Invoke("ResetChoice", 0.1f);
     }
     public void LoadChoice2()
@@ -136,11 +142,15 @@ public class DialogueRunner : MonoBehaviour
         choiceButton1.gameObject.SetActive(false);
         choiceButton2.gameObject.SetActive(false);
         lines = choiceLines2;
-        StartDialogue();
+        index = 0;
+        textGUI.text = lines[index];
+        //StartCoroutine(TypeLine());
+        //StartDialogue();
         Invoke("ResetChoice", 0.1f);
     }
     void ResetChoice()
     {
         System.Array.Resize(ref choiceLines1, choiceLines1.Length - choiceLines1.Length);
+        choiceComplete = false;
     }
 }
