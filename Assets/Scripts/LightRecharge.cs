@@ -12,6 +12,7 @@ public class LightRecharge : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private Light2D ringLight;
     [SerializeField] private Light2D coneLight;
+    [SerializeField] private PolygonCollider2D lightCollider;
     [SerializeField] private LightCheck lightCheck;
 
     [Header("Cooldown Settings")]
@@ -28,6 +29,7 @@ public class LightRecharge : MonoBehaviour
                 slider.gameObject.SetActive(true);
                 ringLight.enabled = false;
                 coneLight.enabled = true;
+                lightCollider.enabled = true;
                 lightCheck.toggle = true;
                 heat++;
             }
@@ -38,6 +40,7 @@ public class LightRecharge : MonoBehaviour
                     ringLight.enabled = true;
                 }
                 coneLight.enabled = false;
+                lightCollider.enabled = false;
                 lightCheck.toggle = false;
                 if (heat > 0f)
                 {
@@ -55,6 +58,7 @@ public class LightRecharge : MonoBehaviour
             heat--;
 
             ringLight.enabled = false;
+            lightCollider.enabled = false;
             coneLight.enabled = false;
             lightCheck.toggle = false;
             slider.gameObject.SetActive(false);

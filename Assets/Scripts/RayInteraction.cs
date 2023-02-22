@@ -24,7 +24,7 @@ public class RayInteraction : MonoBehaviour
         {
             //Debug.Log(hitData.collider.gameObject.name);
 
-            //get the inherited interface from the hit object
+            //get the inherited interfaces from the hit object
             Component[] interactedObjects = hitData.transform.GetComponents(typeof(IInteractable));
             foreach (IInteractable interactedObject in interactedObjects)
             {
