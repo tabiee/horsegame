@@ -5,10 +5,13 @@ using UnityEngine;
 public class MovementAlt : MonoBehaviour
 {
     public float moveSpeed = 0.75f;
-    public float defaultSpeed;
+    public float speedModifier = 1f;
+    public float speedSlowed = 1f;
     public Vector2 moveDir;
     public Rigidbody2D rb;
     public Vector2 latestDir;
+
+    private float defaultSpeed;
 
     private void Awake()
     {
@@ -20,6 +23,12 @@ public class MovementAlt : MonoBehaviour
     {
         //input for Update
         ProcessInputs();
+
+        //count the speed value
+        // 1 * 1 * 1 normally
+        // 1 * 1 * 0.5 for slowed
+        // 1 * 0.5 * 1 for reduced speed from limsects
+        moveSpeed = defaultSpeed * speedModifier * speedSlowed;
     }
     private void FixedUpdate()
     {

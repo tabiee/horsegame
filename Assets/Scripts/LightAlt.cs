@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class LightAlt : MonoBehaviour
 {
+    [Header("General")]
+    [SerializeField] private float slowedSpeed = 0.6f;
+    [SerializeField] private float wobbleSpeed = 1f;
+    [SerializeField] private float wobbleStrength = 0.025f;
+    [Header("Components")]
     [SerializeField] private MovementAlt moveAlt;
-    [SerializeField] private float slowedSpeed = 0.3f;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     [SerializeField] private Vector2 mouseDir;
@@ -18,6 +22,10 @@ public class LightAlt : MonoBehaviour
     }
     void Update()
     {
+        //wobble
+        float y = Mathf.Sin(Time.time * wobbleSpeed) * wobbleStrength;
+        transform.localPosition = new Vector3(0, y, 0);
+
         //run animations
         Animate();
 
@@ -40,11 +48,11 @@ public class LightAlt : MonoBehaviour
         if (Vector2.Dot(moveAlt.moveDir.normalized, mouseDir.normalized) < 0)
         {
             //Debug.Log("Opposite mouse");
-            moveAlt.moveSpeed = slowedSpeed;
+            moveAlt.speedSlowed = slowedSpeed;
         }
         else
         {
-            moveAlt.moveSpeed = moveAlt.defaultSpeed;
+            moveAlt.speedSlowed = 1f;
         }
 
         var angleZ = transform.eulerAngles.z;

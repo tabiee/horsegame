@@ -62,7 +62,7 @@ public class LightCheck : MonoBehaviour
         */
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         //Debug.Log(other.name + " Entered!");
 
@@ -82,22 +82,22 @@ public class LightCheck : MonoBehaviour
         }*/
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    /*private void OnTriggerExit2D(Collider2D other)
     {
         //Debug.Log(other.name + " Exited!");
 
         if (other.GetComponent<EnemyInLight>() != null)
         {
             other.GetComponent<EnemyInLight>().inLight = false;
-        }
-
-        /*
-        if (other.GetComponent<AIPath>() != null && other.tag == "evil")
-        {
-            Debug.Log("Kelpie left the cone!");
-            inLight = false;
         }*/
+
+    /*
+    if (other.GetComponent<AIPath>() != null && other.tag == "evil")
+    {
+        Debug.Log("Kelpie left the cone!");
+        inLight = false;
     }
+}*/
     /* public bool ShadowCheck()
      {
          if (hitData.collider != null)
