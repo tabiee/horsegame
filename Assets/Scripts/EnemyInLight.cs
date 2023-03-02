@@ -31,11 +31,12 @@ public class EnemyInLight : MonoBehaviour
     [SerializeField] private float attackCD = 3f;
     private float attackAllow = 0f;
     private int random;
+    [SerializeField] private GameObject splashParticles;
 
     [Header("Limsect")]
     [SerializeField] private int enemyHealth = 300;
     [SerializeField] private float attachDistance = 0.15f;
-    [SerializeField] private ParticleSystem deathParticles;
+    [SerializeField] private GameObject deathParticles;
     private MovementAlt moveAlt;
     private Rigidbody2D enemyRB;
     private AIPath aiPath;
@@ -88,7 +89,10 @@ public class EnemyInLight : MonoBehaviour
         {
             yield return new WaitUntil(() => Time.time > lightAllow);
         }
-
+        if (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        {
+            Instantiate(splashParticles, transform.position, Quaternion.identity);
+        }
         //this runs when the condition is true
         //action over time
         while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
@@ -99,16 +103,17 @@ public class EnemyInLight : MonoBehaviour
 
             this.gameObject.GetComponent<AIPath>().enabled = false;
             this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            //this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
             yield return null;
         }
 
         //this runs after the condition is false
         //falling action
         //Debug.Log("KelpieLoop has ended!");
+        Instantiate(splashParticles, transform.position, Quaternion.identity);
         this.gameObject.GetComponent<AIPath>().enabled = true;
         this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        //this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
         lightAllow = Time.time + lightCD;
         yield break;
 
@@ -144,19 +149,6 @@ public class EnemyInLight : MonoBehaviour
     }
     void Limsect()
     {
-        //base lightcheck and behaviour
-        /*if (inLight && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
-        {
-            //Debug.Log(gameObject.name + " is in the light!");
-
-            enemyHealth--;
-
-        }
-        else if (hitData.collider != null && Time.time > lightAllow)
-        {
-            lightAllow = lightCD + Time.time;
-
-        }*/
         //if reached player
         bool once = false;
         if (aiPath.remainingDistance < attachDistance && once == false)

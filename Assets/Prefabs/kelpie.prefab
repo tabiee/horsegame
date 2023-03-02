@@ -204,19 +204,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc307ec23d941e34d99cdfad7361b709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scitterSpeed: 0.1
-  sideSpeed: 0.6
+  kelpieSpeed: 0.45
+  kelpieSideSpeed: 0.65
+  limsectSpeed: 0.9
+  limsectSideSpeed: 1.1
   playerObject: {fileID: 0}
   lightCheck: {fileID: 0}
+  playerLife: {fileID: 0}
   inLight: 0
+  running: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 132
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   distance: 25
   lightCD: 0.45
   avoidCD: 0.45
+  attackCD: 3
+  splashParticles: {fileID: 5137123306192418792, guid: 5a8d99fb95262ea458a7b580f2a1611c, type: 3}
   enemyHealth: 100
-  deathParticles: {fileID: 0}
+  attachDistance: 0.15
+  deathParticles: {fileID: 3692963835449993043, guid: 13838b7c0e27ec940b2f1d1bd1c22f93, type: 3}
 --- !u!50 &5039127353959136670
 Rigidbody2D:
   serializedVersion: 4
