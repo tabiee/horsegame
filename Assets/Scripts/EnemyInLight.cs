@@ -6,16 +6,21 @@ using Pathfinding;
 public class EnemyInLight : MonoBehaviour
 {
     [Header("General")]
-    [SerializeField] private float scitterSpeed = 0.65f;
-    [SerializeField] private float sideSpeed = 0.85f;
+    [SerializeField] private float kelpieSpeed = 0.45f;
+    [SerializeField] private float kelpieSideSpeed = 0.65f;
+    [SerializeField] private float limsectSpeed = 0.9f;
+    [SerializeField] private float limsectSideSpeed = 1.1f;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private LightCheck lightCheck;
     [SerializeField] private PlayerLife playerLife;
     public bool inLight = false;
+    public bool running = false;
 
     [Header("Raycast")]
     public RaycastHit2D hitData;
+    public RaycastHit2D hitData2;
     public LayerMask playerLayer;
+    public LayerMask enemyLayer;
     public float distance = 25f;
 
     [Header("Kelpie")]
@@ -45,15 +50,12 @@ public class EnemyInLight : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         enemyRB = GetComponent<Rigidbody2D>();
     }
-    private void FixedUpdate()
-    {
-        inLight = false;
-    }
     private void Update()
     {
         //Debug.Log(gameObject.name + "'s inLight is: " + inLight);
         //Debug.Log(gameObject.name + "'s ShadowCheck is: " + ShadowCheck());
         //Debug.Log(gameObject.name + "'s lightCheck.toggle is: " + lightCheck.toggle);
+        //Debug.Log(gameObject.name + "'s lightAllow is: " + (Time.time > lightAllow));
 
         ShadowCheck();
         //is it in light and not behind anything?
@@ -69,33 +71,68 @@ public class EnemyInLight : MonoBehaviour
         }
         //shadows/limbs behaviour
 
-        //if light is not turned on, mark enemy as not being in light
+        //if light is off, mark as false
         if (lightCheck.toggle == false)
         {
             inLight = false;
         }
     }
-    void Kelpie()
+
+    public IEnumerator KelpieLoop()
     {
-        //base lightcheck and behaviour
-        if (inLight && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        //this runs when the coroutine starts
+        //rising action
+        //Debug.Log("KelpieLoop initial command ran!");
+
+        if (Time.time < lightAllow)
         {
-            Debug.Log(gameObject.name + " is in the light!");
-            Avoidance();
+            yield return new WaitUntil(() => Time.time > lightAllow);
+        }
+
+        //this runs when the condition is true
+        //action over time
+        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        {
+            //Debug.Log("KelpieLoop while is running!");
+            Avoidance(kelpieSpeed, kelpieSideSpeed);
             //avoid light
 
             this.gameObject.GetComponent<AIPath>().enabled = false;
             this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            yield return null;
+        }
 
-        }
-        else if (hitData.collider != null && Time.time > lightAllow)
+        //this runs after the condition is false
+        //falling action
+        //Debug.Log("KelpieLoop has ended!");
+        this.gameObject.GetComponent<AIPath>().enabled = true;
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        lightAllow = Time.time + lightCD;
+        yield break;
+
+    }
+    public IEnumerator LimsectLoop()
+    {
+        //Debug.Log("LimesectLoop initial command ran!");
+        if (Time.time < lightAllow)
         {
-            lightAllow = lightCD + Time.time;
-            this.gameObject.GetComponent<AIPath>().enabled = true;
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //Debug.Log("LimesectLoop has detected lightAllow as false!");
+            yield return new WaitUntil(() => Time.time > lightAllow);
         }
+        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        {
+            //Debug.Log("LimesectLoop while is running!");
+            enemyHealth--;
+            yield return null;
+        }
+        //Debug.Log("LimesectLoop has ended!");
+        lightAllow = Time.time + lightCD;
+        yield break;
+    }
+    void Kelpie()
+    {
         //if reached player
 
         if (aiPath.remainingDistance < attachDistance && Time.time > attackAllow)
@@ -105,43 +142,12 @@ public class EnemyInLight : MonoBehaviour
             playerLife.KelpieAttack();
         }
     }
-    void Avoidance()
-    {
-        //randomize avoidance
-        if (Time.time > avoidAllow)
-        {
-            avoidAllow = avoidCD + Time.time;
-            random = Random.Range(0, 2);
-        }
-
-        var playerDir = this.gameObject.transform.localPosition - playerObject.transform.position;
-
-        float angleRad = Mathf.Atan2(playerObject.transform.position.y - transform.position.y, playerObject.transform.position.x - transform.position.x);
-        // Get Angle in Degrees
-        float angleDeg = 180 / Mathf.PI * angleRad;
-        // Rotate Object
-        transform.rotation = Quaternion.Euler(0, 0, angleDeg - 90);
-
-        switch (random)
-        {
-            case 0:
-                //move right (x) and forward from local space when in light
-                this.gameObject.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                break;
-            case 1:
-                this.gameObject.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                break;
-            case 2:
-                this.gameObject.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                break;
-        }
-    }
     void Limsect()
     {
         //base lightcheck and behaviour
-        if (inLight && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        /*if (inLight && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
         {
-            Debug.Log(gameObject.name + " is in the light!");
+            //Debug.Log(gameObject.name + " is in the light!");
 
             enemyHealth--;
 
@@ -150,7 +156,7 @@ public class EnemyInLight : MonoBehaviour
         {
             lightAllow = lightCD + Time.time;
 
-        }
+        }*/
         //if reached player
         bool once = false;
         if (aiPath.remainingDistance < attachDistance && once == false)
@@ -171,7 +177,79 @@ public class EnemyInLight : MonoBehaviour
             if (enemyRB.bodyType == RigidbodyType2D.Kinematic)
             {
                 moveAlt.speedModifier = moveAlt.speedModifier + playerLife.speedReduction;
+                playerLife.health = playerLife.health + playerLife.limsectDamage;
             }
+        }
+
+        CrowdCheck();
+        if (CrowdCheck() == true)
+        {
+            Avoidance(limsectSpeed, limsectSideSpeed);
+        }
+    }
+    void Avoidance(float scitterSpeed, float sideSpeed)
+    {
+        //randomize avoidance
+        if (Time.time > avoidAllow)
+        {
+            avoidAllow = avoidCD + Time.time;
+            random = Random.Range(0, 2);
+        }
+
+        if (Time.time > lightAllow)
+        {
+            var playerDir = this.gameObject.transform.localPosition - playerObject.transform.position;
+
+            float angleRad = Mathf.Atan2(playerObject.transform.position.y - transform.position.y, playerObject.transform.position.x - transform.position.x);
+            // Get Angle in Degrees
+            float angleDeg = 180 / Mathf.PI * angleRad;
+            // Rotate Object
+            transform.rotation = Quaternion.Euler(0, 0, angleDeg - 90);
+
+            switch (random)
+            {
+                case 0:
+                    //move right (x) and forward from local space when in light
+                    this.gameObject.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+                case 1:
+                    this.gameObject.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+                case 2:
+                    this.gameObject.transform.localPosition += (transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+                case 3:
+                    this.gameObject.transform.localPosition += (-transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                    break;
+            }
+        }
+    }
+    private bool CrowdCheck()
+    {
+        if (hitData2.collider != null)
+        {
+            //Debug.Log(gameObject.name + "'s Ray hit: " + hitData2.collider.gameObject.name);
+        }
+
+        Ray2D ray = new Ray2D(this.transform.position, playerObject.gameObject.transform.position - this.transform.position);
+
+        //show the ray
+        Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f, false);
+
+        //shoot a ray from enemy position to player position, only hit the specified layer
+        hitData2 = Physics2D.Raycast(ray.origin, ray.direction, 0.4f, enemyLayer);
+
+
+        //if it hit something, run stuff
+        if (hitData2.collider != null)
+        {
+            //yes it's behind an enemy
+            return true;
+        }
+        else
+        {
+            //no it's not behind an enemy
+            return false;
         }
     }
     private bool ShadowCheck()
@@ -186,7 +264,7 @@ public class EnemyInLight : MonoBehaviour
         //show the ray
         Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f, false);
 
-        //shoot a ray from player position to kelpie position, only hit the specified layer
+        //shoot a ray from enemy position to player position, only hit the specified layer
         hitData = Physics2D.Raycast(ray.origin, ray.direction, distance, ~playerLayer);
 
 

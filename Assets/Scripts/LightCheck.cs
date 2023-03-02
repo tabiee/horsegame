@@ -62,14 +62,23 @@ public class LightCheck : MonoBehaviour
         */
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log(other.name + " Entered!");
 
-        //foreach (Collider2D enemyContact in other)
-        if (other.GetComponent<EnemyInLight>() != null)
+        var hitEnemy = other.GetComponent<EnemyInLight>();
+        if (hitEnemy != null)
         {
-            other.GetComponent<EnemyInLight>().inLight = true;
+            hitEnemy.inLight = true;
+
+            if (other.gameObject.tag == "Kelpie")
+            {
+                StartCoroutine(hitEnemy.KelpieLoop());
+            }
+            if (other.gameObject.tag == "Limsect")
+            {
+                StartCoroutine(hitEnemy.LimsectLoop());
+            }
         }
 
         /*
@@ -82,14 +91,25 @@ public class LightCheck : MonoBehaviour
         }*/
     }
 
-    /*private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         //Debug.Log(other.name + " Exited!");
 
-        if (other.GetComponent<EnemyInLight>() != null)
+        var hitEnemy = other.GetComponent<EnemyInLight>();
+        if (hitEnemy != null)
         {
-            other.GetComponent<EnemyInLight>().inLight = false;
-        }*/
+            hitEnemy.inLight = false;
+
+            if (other.gameObject.tag == "Kelpie")
+            {
+                StopCoroutine(hitEnemy.KelpieLoop());
+            }
+            if (other.gameObject.tag == "Limsect")
+            {
+                StopCoroutine(hitEnemy.LimsectLoop());
+            }
+        }
+    }
 
     /*
     if (other.GetComponent<AIPath>() != null && other.tag == "evil")

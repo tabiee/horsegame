@@ -5,26 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    [SerializeField] private int health = 8;
-    [SerializeField] private MovementAlt moveAlt;
+    public int health = 8;
     public float speedReduction = 0.25f;
+    public int kelpieDamage = 4;
+    public int limsectDamage = 2;
+    [SerializeField] private MovementAlt moveAlt;
     void Update()
     {
         if (health <= 0)
         {
             //play some effect and do death
-            Debug.Log("You have died!");
-            SceneManager.LoadScene("GameOver");
+            //Debug.Log("You have died!");
+            //SceneManager.LoadScene("GameOver");
         }
     }
     public void KelpieAttack()
     {
-        health = health - 4;
-        Debug.Log("Kelpie nibble!");
+        health = health - kelpieDamage;
+        //Debug.Log("Kelpie nibble!");
     }
     public void LimsectAttack()
     {
-        health = health - 2;
+        Debug.Log("Limsect snatch!");
+        health = health - limsectDamage;
         moveAlt.speedModifier = moveAlt.speedModifier - speedReduction;
     }
 }

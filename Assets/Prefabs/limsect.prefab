@@ -319,14 +319,20 @@ MonoBehaviour:
   sideSpeed: 0.6
   playerObject: {fileID: 0}
   lightCheck: {fileID: 0}
+  playerLife: {fileID: 0}
   inLight: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 132
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   distance: 25
   lightCD: 0.45
   avoidCD: 0.45
+  attackCD: 3
   enemyHealth: 100
+  attachDistance: 0.15
   deathParticles: {fileID: 3692963835449993052, guid: 13838b7c0e27ec940b2f1d1bd1c22f93, type: 3}
 --- !u!50 &8882256380344850458
 Rigidbody2D:
