@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyInLight : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class EnemyInLight : MonoBehaviour
     [SerializeField] private GameObject playerObject;
     [SerializeField] private LightCheck lightCheck;
     [SerializeField] private PlayerLife playerLife;
+    private AIPath aiPath;
+    private AIDestinationSetter aiTarget;
+    private SpriteRenderer spriteRenderer;
+    private ShadowCaster2D shadowCaster;
     public bool inLight = false;
     public bool running = false;
 
@@ -24,6 +29,8 @@ public class EnemyInLight : MonoBehaviour
     public float distance = 25f;
 
     [Header("Kelpie")]
+    [SerializeField] private GameObject ripple;
+    [SerializeField] private float resurfaceTimer = 1f;
     [SerializeField] private float lightCD = 0.2f;
     private float lightAllow = 0f;
     [SerializeField] private float avoidCD = 0.2f;
@@ -39,7 +46,6 @@ public class EnemyInLight : MonoBehaviour
     [SerializeField] private GameObject deathParticles;
     private MovementAlt moveAlt;
     private Rigidbody2D enemyRB;
-    private AIPath aiPath;
 
 
     private void Awake()
@@ -49,7 +55,10 @@ public class EnemyInLight : MonoBehaviour
         moveAlt = playerObject.GetComponent<MovementAlt>();
         lightCheck = playerObject.GetComponentInChildren<LightCheck>();
         aiPath = GetComponent<AIPath>();
+        aiTarget = GetComponent<AIDestinationSetter>();
         enemyRB = GetComponent<Rigidbody2D>();
+        spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
+        shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
     }
     private void Update()
     {
@@ -77,6 +86,9 @@ public class EnemyInLight : MonoBehaviour
         {
             inLight = false;
         }
+
+        //keep the sprite in the right place
+        spriteRenderer.transform.position = transform.position;
     }
 
     public IEnumerator KelpieLoop()
@@ -92,6 +104,7 @@ public class EnemyInLight : MonoBehaviour
         if (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
         {
             Instantiate(splashParticles, transform.position, Quaternion.identity);
+            ripple.SetActive(true);
         }
         //this runs when the condition is true
         //action over time
@@ -101,22 +114,26 @@ public class EnemyInLight : MonoBehaviour
             Avoidance(kelpieSpeed, kelpieSideSpeed);
             //avoid light
 
-            this.gameObject.GetComponent<AIPath>().enabled = false;
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            //this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            aiPath.enabled = false;
+            spriteRenderer.enabled = false;
+            shadowCaster.enabled = false;
             yield return null;
         }
-
         //this runs after the condition is false
         //falling action
         //Debug.Log("KelpieLoop has ended!");
-        Instantiate(splashParticles, transform.position, Quaternion.identity);
-        this.gameObject.GetComponent<AIPath>().enabled = true;
-        this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        //this.gameObject.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        lightAllow = Time.time + lightCD;
+        Invoke("KelpieEnd", resurfaceTimer);
         yield break;
 
+    }
+    public void KelpieEnd()
+    {
+        ripple.SetActive(false);
+        Instantiate(splashParticles, transform.position, Quaternion.identity);
+        aiPath.enabled = true;
+        spriteRenderer.enabled = true;
+        shadowCaster.enabled = true;
+        lightAllow = Time.time + lightCD;
     }
     public IEnumerator LimsectLoop()
     {
@@ -146,6 +163,12 @@ public class EnemyInLight : MonoBehaviour
             attackAllow = Time.time + attackCD;
             playerLife.KelpieAttack();
         }
+
+        //flip in the direction of movement
+        if (aiTarget.target != null)
+        {
+            spriteRenderer.flipX = (aiPath.desiredVelocity.x > 0.0f);
+        }
     }
     void Limsect()
     {
@@ -155,7 +178,7 @@ public class EnemyInLight : MonoBehaviour
         {
             once = true;
             gameObject.transform.SetParent(playerObject.transform, true);
-            this.gameObject.GetComponent<AIPath>().enabled = false;
+            aiPath.enabled = false;
             enemyRB.bodyType = RigidbodyType2D.Kinematic;
             playerLife.LimsectAttack();
         }
