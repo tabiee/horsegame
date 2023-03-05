@@ -18,6 +18,12 @@ public class LightRecharge : MonoBehaviour
     [Header("Cooldown Settings")]
     [SerializeField] private float cooldown = 5f;
     private float cdAllow;
+
+    private float startPos;
+    private void Awake()
+    {
+        startPos = transform.position.z;
+    }
     void Update()
     {
         slider.value = CalculatePercentage();
@@ -29,8 +35,9 @@ public class LightRecharge : MonoBehaviour
                 slider.gameObject.SetActive(true);
                 ringLight.enabled = false;
                 coneLight.enabled = true;
-                lightCollider.enabled = true;
+                //lightCollider.gameObject.transform.position = new Vector3(0, lightCollider.gameObject.transform.position.y, startPos);
                 lightCheck.toggle = true;
+                //lightCheck.enabled = true;
                 heat++;
             }
             else
@@ -40,8 +47,10 @@ public class LightRecharge : MonoBehaviour
                     ringLight.enabled = true;
                 }
                 coneLight.enabled = false;
-                lightCollider.enabled = false;
+                //lightCollider.enabled = false;
+                //lightCollider.gameObject.transform.position = new Vector3(0, lightCollider.gameObject.transform.position.y, startPos - 5);
                 lightCheck.toggle = false;
+                //lightCheck.enabled = false;
                 if (heat > 0f)
                 {
                     heat--;
@@ -58,7 +67,7 @@ public class LightRecharge : MonoBehaviour
             heat--;
 
             ringLight.enabled = false;
-            lightCollider.enabled = false;
+            //lightCollider.enabled = false;
             coneLight.enabled = false;
             lightCheck.toggle = false;
             slider.gameObject.SetActive(false);

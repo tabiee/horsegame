@@ -11,68 +11,49 @@ public class LightCheck : MonoBehaviour
     //[SerializeField] private float scitterSpeed = 0.65f;
     //[SerializeField] private float sideSpeed = 0.85f;
 
-    [Header("Raycast")]
-    public RaycastHit2D hitData;
-    public LayerMask playerLayer;
-    public float distance = 25f;
-
-    //private bool once = false;
-    //private int random;
-
+    [Header("General")]
+    public EnemyInLight hitEnemy;
+    public bool once = false;
     public bool toggle = false;
 
     private void Update()
     {
-        //ShadowCheck();
-        //is it in light and not behind anything?
+        //Debug.Log("hitEnemy data is: " + hitEnemy);
 
-        /* if (inLight && ShadowCheck() == true && toggle == true)
-         {
-             if (once == false)
-             {
-                 once = true;
-                 random = Random.Range(0, 2);
-             }
-             var playerDir = aiPath.transform.localPosition - transform.parent.position;
-             switch (random)
-             {
-                 case 0:
-                     //move right (x) and forward from local space when in light
-                     aiPath.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                     break;
-                 case 1:
-                     aiPath.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                     break;
-                 case 2:
-                     aiPath.transform.localPosition += (-transform.right * sideSpeed + playerDir * scitterSpeed) * Time.deltaTime;
-                     break;
-             }
-             aiPath.GetComponent<AIPath>().enabled = false;
-             aiPath.GetComponent<SpriteRenderer>().enabled = false;
-             aiPath.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = true;
-
-         }
-         else if (hitData.collider != null)
-         {
-             once = false;
-             aiPath.GetComponent<AIPath>().enabled = true;
-             aiPath.GetComponent<SpriteRenderer>().enabled = true;
-             aiPath.transform.Find("splash").gameObject.GetComponent<SpriteRenderer>().enabled = false;
-         }
-        */
     }
+
+    /*private void OnTriggerStay2D(Collider2D other)
+    {
+        hitEnemy = other.GetComponent<EnemyInLight>();
+
+        if (hitEnemy != null)
+        {
+            hitEnemy.inLight = true;
+
+            if (other.gameObject.tag == "Kelpie" && once == false)
+            {
+
+                StartCoroutine(hitEnemy.KelpieLoop());
+            }
+            if (other.gameObject.tag == "Limsect" && once == false)
+            {
+                StartCoroutine(hitEnemy.LimsectLoop());
+            }
+        }
+    }*/
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log(other.name + " Entered!");
 
-        var hitEnemy = other.GetComponent<EnemyInLight>();
+        hitEnemy = other.GetComponent<EnemyInLight>();
         if (hitEnemy != null)
         {
             hitEnemy.inLight = true;
 
             if (other.gameObject.tag == "Kelpie")
             {
+                Debug.Log(other.name + " Entered!");
                 StartCoroutine(hitEnemy.KelpieLoop());
             }
             if (other.gameObject.tag == "Limsect")
@@ -80,28 +61,19 @@ public class LightCheck : MonoBehaviour
                 StartCoroutine(hitEnemy.LimsectLoop());
             }
         }
-
-        /*
-        if (other.GetComponent<AIPath>() != null && other.tag == "evil")
-        {
-            //if in light, hide sprite, change bool that does speed and show splash sprite
-            aiPath = other.GetComponent<AIPath>();
-            Debug.Log("Kelpie is in the cone!");
-            inLight = true;
-        }*/
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        //Debug.Log(other.name + " Exited!");
 
-        var hitEnemy = other.GetComponent<EnemyInLight>();
+        hitEnemy = other.GetComponent<EnemyInLight>();
         if (hitEnemy != null)
         {
             hitEnemy.inLight = false;
 
             if (other.gameObject.tag == "Kelpie")
             {
+                Debug.Log(other.name + " Exited!");
                 StopCoroutine(hitEnemy.KelpieLoop());
             }
             if (other.gameObject.tag == "Limsect")
@@ -111,39 +83,30 @@ public class LightCheck : MonoBehaviour
         }
     }
 
-    /*
-    if (other.GetComponent<AIPath>() != null && other.tag == "evil")
-    {
-        Debug.Log("Kelpie left the cone!");
-        inLight = false;
-    }
-}*/
-    /* public bool ShadowCheck()
+    /* private void OnEnable()
      {
-         if (hitData.collider != null)
+         if (hitEnemy != null && hitEnemy.gameObject.tag == "Kelpie")
          {
-             //Debug.Log(hitData.collider.gameObject.name);
+             hitEnemy.inLight = true;
+             StartCoroutine(hitEnemy.KelpieLoop());
          }
-
-         if (aiPath != null)
+         if (hitEnemy != null && hitEnemy.gameObject.tag == "Limsect")
          {
-             Ray2D ray = new Ray2D(transform.parent.position, aiPath.transform.position - transform.parent.position);
-
-             //show the ray
-             Debug.DrawRay(ray.origin, ray.direction, Color.magenta, 0.1f, false);
-
-             //shoot a ray from player position to kelpie position, only hit the specified layer
-             hitData = Physics2D.Raycast(ray.origin, ray.direction, distance, ~playerLayer);
+             hitEnemy.inLight = true;
+             StartCoroutine(hitEnemy.LimsectLoop());
          }
-
-         //if it hit something, run stuff
-         if (hitData.collider != null && hitData.collider.tag == "evil")
+     }
+     private void OnDisable()
+     {
+         if (hitEnemy != null && hitEnemy.gameObject.tag == "Kelpie")
          {
-             return true;
+             hitEnemy.inLight = false;
+             StopCoroutine(hitEnemy.KelpieLoop());
          }
-         else
+         if (hitEnemy != null && hitEnemy.gameObject.tag == "Limsect")
          {
-             return false;
+             hitEnemy.inLight = false;
+             StopCoroutine(hitEnemy.LimsectLoop());
          }
      }*/
 }

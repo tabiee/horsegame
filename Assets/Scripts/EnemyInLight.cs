@@ -11,15 +11,17 @@ public class EnemyInLight : MonoBehaviour
     [SerializeField] private float kelpieSideSpeed = 0.65f;
     [SerializeField] private float limsectSpeed = 0.9f;
     [SerializeField] private float limsectSideSpeed = 1.1f;
-    [SerializeField] private GameObject playerObject;
-    [SerializeField] private LightCheck lightCheck;
-    [SerializeField] private PlayerLife playerLife;
+    [SerializeField] private int enemyHealth = 300;
+    public bool inLight = false;
+
+    private GameObject playerObject;
+    private LightCheck lightCheck;
+    private PlayerLife playerLife;
+    private int maxHealth;
     private AIPath aiPath;
     private AIDestinationSetter aiTarget;
     private SpriteRenderer spriteRenderer;
     private ShadowCaster2D shadowCaster;
-    public bool inLight = false;
-    public bool running = false;
 
     [Header("Raycast")]
     public RaycastHit2D hitData;
@@ -30,6 +32,7 @@ public class EnemyInLight : MonoBehaviour
 
     [Header("Kelpie")]
     [SerializeField] private GameObject ripple;
+    [SerializeField] private Animator animatorRipple;
     [SerializeField] private float resurfaceTimer = 1f;
     [SerializeField] private float lightCD = 0.2f;
     private float lightAllow = 0f;
@@ -40,8 +43,10 @@ public class EnemyInLight : MonoBehaviour
     private int random;
     [SerializeField] private GameObject splashParticles;
 
+    [SerializeField] private float internalSpeed = 1f, internalSlowed = 0.85f;
+    private float internalModifier = 1f;
+
     [Header("Limsect")]
-    [SerializeField] private int enemyHealth = 300;
     [SerializeField] private float attachDistance = 0.15f;
     [SerializeField] private GameObject deathParticles;
     private MovementAlt moveAlt;
@@ -59,9 +64,16 @@ public class EnemyInLight : MonoBehaviour
         enemyRB = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
         shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
+
+        maxHealth = enemyHealth;
+        aiPath.maxSpeed = internalSpeed;
+    }
+    private void FixedUpdate()
+    {
     }
     private void Update()
     {
+        //inLight = false;
         //Debug.Log(gameObject.name + "'s inLight is: " + inLight);
         //Debug.Log(gameObject.name + "'s ShadowCheck is: " + ShadowCheck());
         //Debug.Log(gameObject.name + "'s lightCheck.toggle is: " + lightCheck.toggle);
@@ -79,7 +91,7 @@ public class EnemyInLight : MonoBehaviour
         {
             Limsect();
         }
-        //shadows/limbs behaviour
+        //limbsect behaviour
 
         //if light is off, mark as false
         if (lightCheck.toggle == false)
@@ -89,51 +101,88 @@ public class EnemyInLight : MonoBehaviour
 
         //keep the sprite in the right place
         spriteRenderer.transform.position = transform.position;
+
+        //calculate speed
+        aiPath.maxSpeed = internalSpeed * internalModifier;
     }
 
     public IEnumerator KelpieLoop()
     {
         //this runs when the coroutine starts
         //rising action
-        //Debug.Log("KelpieLoop initial command ran!");
+        Debug.Log("KelpieLoop initial command ran!");
 
         if (Time.time < lightAllow)
         {
             yield return new WaitUntil(() => Time.time > lightAllow);
         }
-        if (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        if (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow && enemyHealth <= 0)
         {
             Instantiate(splashParticles, transform.position, Quaternion.identity);
             ripple.SetActive(true);
+            //animatorRipple.enabled = true;
+            //animatorRipple.StartPlayback();
         }
         //this runs when the condition is true
         //action over time
         while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
         {
-            //Debug.Log("KelpieLoop while is running!");
-            Avoidance(kelpieSpeed, kelpieSideSpeed);
-            //avoid light
+            if (enemyHealth > 0)
+            {
+                enemyHealth--;
+            }
+            else
+            {
+                //reduce speed by a %
+                internalModifier = internalSlowed;
 
-            aiPath.enabled = false;
-            spriteRenderer.enabled = false;
-            shadowCaster.enabled = false;
+                //Debug.Log("KelpieLoop while is running!");
+                Avoidance(kelpieSpeed, kelpieSideSpeed);
+                //avoid light
+
+                aiPath.enabled = false;
+                spriteRenderer.enabled = false;
+                shadowCaster.enabled = false;
+            }
             yield return null;
         }
         //this runs after the condition is false
         //falling action
-        //Debug.Log("KelpieLoop has ended!");
+        Debug.Log("KelpieLoop has ended!");
         Invoke("KelpieEnd", resurfaceTimer);
         yield break;
 
     }
     public void KelpieEnd()
     {
+        enemyHealth = maxHealth;
+        internalModifier = 1f;
+
         ripple.SetActive(false);
+        //animatorRipple.StopPlayback();
+        //animatorRipple.enabled = false;
         Instantiate(splashParticles, transform.position, Quaternion.identity);
         aiPath.enabled = true;
         spriteRenderer.enabled = true;
         shadowCaster.enabled = true;
         lightAllow = Time.time + lightCD;
+    }
+    void Kelpie()
+    {
+        //if reached player
+
+        if (aiPath.remainingDistance < attachDistance && Time.time > attackAllow)
+        {
+            //deal dmg to player and do some fancy shit idk
+            attackAllow = Time.time + attackCD;
+            playerLife.KelpieAttack();
+        }
+
+        //flip in the direction of movement
+        if (aiTarget.target != null)
+        {
+            spriteRenderer.flipX = (aiPath.desiredVelocity.x > 0.0f);
+        }
     }
     public IEnumerator LimsectLoop()
     {
@@ -152,23 +201,6 @@ public class EnemyInLight : MonoBehaviour
         //Debug.Log("LimesectLoop has ended!");
         lightAllow = Time.time + lightCD;
         yield break;
-    }
-    void Kelpie()
-    {
-        //if reached player
-
-        if (aiPath.remainingDistance < attachDistance && Time.time > attackAllow)
-        {
-            //deal dmg to player and do some fancy shit idk
-            attackAllow = Time.time + attackCD;
-            playerLife.KelpieAttack();
-        }
-
-        //flip in the direction of movement
-        if (aiTarget.target != null)
-        {
-            spriteRenderer.flipX = (aiPath.desiredVelocity.x > 0.0f);
-        }
     }
     void Limsect()
     {

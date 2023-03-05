@@ -13,24 +13,35 @@ public class LightAlt : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     [SerializeField] private Vector2 mouseDir;
+    [SerializeField] private LightCheck lightCheck;
     private void Awake()
     {
         //grab everything i need from the sprite object
         moveAlt = GetComponentInParent<MovementAlt>();
         animator = transform.GetComponentInParent<Animator>();
         sprite = transform.GetComponentInParent<SpriteRenderer>();
+        lightCheck = GetComponent<LightCheck>();
     }
     void Update()
     {
         //wobble
         float y = Mathf.Sin(Time.time * wobbleSpeed) * wobbleStrength;
-        transform.localPosition = new Vector3(0, y, 0);
+
+        transform.localPosition = new Vector3(0, y, transform.localPosition.z);
 
         //run animations
         Animate();
 
         //handle light rotation & movement speed
-        RotateLight();
+        if (lightCheck.toggle == true)
+        {
+            RotateLight();
+        }
+        else
+        {
+            //debug for OnTriggerExit not firing when the cone is disabled
+            transform.eulerAngles = new Vector3(90, 0, 0);
+        }
     }
     void RotateLight()
     {

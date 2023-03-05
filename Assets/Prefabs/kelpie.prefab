@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2149479676399357036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -3.16, z: 0}
-  m_LocalScale: {x: 1.1693004, y: 1.1693004, z: 1.1693004}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4403791289188555327}
@@ -272,7 +272,7 @@ MonoBehaviour:
   radius: 0.075
   height: 2
   canMove: 1
-  maxSpeed: 0.8
+  maxSpeed: 1.1
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -340,15 +340,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc307ec23d941e34d99cdfad7361b709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kelpieSpeed: 0.45
-  kelpieSideSpeed: 0.65
+  kelpieSpeed: 0.4
+  kelpieSideSpeed: 0.2
   limsectSpeed: 0.9
   limsectSideSpeed: 1.1
-  playerObject: {fileID: 0}
-  lightCheck: {fileID: 0}
-  playerLife: {fileID: 0}
+  enemyHealth: 30
   inLight: 0
-  running: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 132
@@ -357,12 +354,14 @@ MonoBehaviour:
     m_Bits: 0
   distance: 25
   ripple: {fileID: 2149479676399357036}
-  resurfaceTimer: 1
-  lightCD: 0.75
+  animatorRipple: {fileID: 6786928386173289892}
+  resurfaceTimer: 0.75
+  lightCD: 0.35
   avoidCD: 0.45
   attackCD: 2
   splashParticles: {fileID: 3809225352425954790, guid: e1a40c61c91eb7c4d8e205402c405cab, type: 3}
-  enemyHealth: 100
+  internalSpeed: 1
+  internalSlowed: 0.85
   attachDistance: 0.15
   deathParticles: {fileID: 3692963835449993043, guid: 13838b7c0e27ec940b2f1d1bd1c22f93, type: 3}
 --- !u!50 &4403791288744768204
@@ -498,4 +497,4 @@ MonoBehaviour:
   - {x: 3.9138584, y: -4.432722, z: 0}
   m_ShapePathHash: 1021801677
   m_Mesh: {fileID: 0}
-  m_InstanceId: 205550
+  m_InstanceId: -1790
