@@ -111,17 +111,11 @@ public class EnemyInLight : MonoBehaviour
         //this runs when the coroutine starts
         //rising action
         Debug.Log("KelpieLoop initial command ran!");
+        bool once = false;
 
         if (Time.time < lightAllow)
         {
             yield return new WaitUntil(() => Time.time > lightAllow);
-        }
-        if (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow && enemyHealth <= 0)
-        {
-            Instantiate(splashParticles, transform.position, Quaternion.identity);
-            ripple.SetActive(true);
-            //animatorRipple.enabled = true;
-            //animatorRipple.StartPlayback();
         }
         //this runs when the condition is true
         //action over time
@@ -133,6 +127,17 @@ public class EnemyInLight : MonoBehaviour
             }
             else
             {
+                //need this to run only once but it aint working
+                if (once == false)
+                {
+                    once = true;
+                    Debug.Log("Splash and ripple at Rising!");
+                    Instantiate(splashParticles, transform.position, Quaternion.identity);
+                    ripple.SetActive(true);
+                    //animatorRipple.enabled = true;
+                    //animatorRipple.StartPlayback();
+                }
+
                 //reduce speed by a %
                 internalModifier = internalSlowed;
 
@@ -146,15 +151,16 @@ public class EnemyInLight : MonoBehaviour
             }
             yield return null;
         }
+
         //this runs after the condition is false
         //falling action
-        Debug.Log("KelpieLoop has ended!");
         Invoke("KelpieEnd", resurfaceTimer);
         yield break;
 
     }
     public void KelpieEnd()
     {
+        Debug.Log("KelpieLoop has ended!");
         enemyHealth = maxHealth;
         internalModifier = 1f;
 
