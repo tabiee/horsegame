@@ -22,7 +22,7 @@ public class PlayerLife : MonoBehaviour
     public void KelpieAttack()
     {
         health = health - kelpieDamage;
-        //Debug.Log("Kelpie nibble!");
+        Debug.Log("Kelpie nibble!");
     }
     public void LimsectAttack()
     {

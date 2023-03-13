@@ -22,6 +22,7 @@ public class EnemyInLight : MonoBehaviour
     private AIDestinationSetter aiTarget;
     private SpriteRenderer spriteRenderer;
     private ShadowCaster2D shadowCaster;
+    private Animator animator;
 
     [Header("Raycast")]
     public RaycastHit2D hitData;
@@ -62,6 +63,7 @@ public class EnemyInLight : MonoBehaviour
         enemyRB = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
         shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
+        animator = transform.parent.GetComponentInChildren<Animator>();
 
         maxHealth = enemyHealth;
         aiPath.maxSpeed = internalSpeed;
@@ -175,6 +177,7 @@ public class EnemyInLight : MonoBehaviour
             //deal dmg to player and do some fancy shit idk
             attackAllow = Time.time + attackCD;
             playerLife.KelpieAttack();
+            animator.SetTrigger("attack");
         }
 
         //flip in the direction of movement
