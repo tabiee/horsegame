@@ -34,8 +34,6 @@ public class EnemyInLight : MonoBehaviour
     [SerializeField] private GameObject ripple;
     [SerializeField] private Animator animatorRipple;
     [SerializeField] private float resurfaceTimer = 1f;
-    [SerializeField] private float lightCD = 0.2f;
-    private float lightAllow = 0f;
     [SerializeField] private float avoidCD = 0.2f;
     private float avoidAllow = 0f;
     [SerializeField] private float attackCD = 3f;
@@ -113,13 +111,9 @@ public class EnemyInLight : MonoBehaviour
         Debug.Log("KelpieLoop initial command ran!");
         bool once = false;
 
-        if (Time.time < lightAllow)
-        {
-            yield return new WaitUntil(() => Time.time > lightAllow);
-        }
         //this runs when the condition is true
         //action over time
-        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true)
         {
             if (enemyHealth > 0)
             {
@@ -171,7 +165,6 @@ public class EnemyInLight : MonoBehaviour
         aiPath.enabled = true;
         spriteRenderer.enabled = true;
         shadowCaster.enabled = true;
-        lightAllow = Time.time + lightCD;
     }
     void Kelpie()
     {
@@ -193,19 +186,14 @@ public class EnemyInLight : MonoBehaviour
     public IEnumerator LimsectLoop()
     {
         //Debug.Log("LimesectLoop initial command ran!");
-        if (Time.time < lightAllow)
-        {
-            //Debug.Log("LimesectLoop has detected lightAllow as false!");
-            yield return new WaitUntil(() => Time.time > lightAllow);
-        }
-        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true && Time.time > lightAllow)
+
+        while (inLight == true && ShadowCheck() == true && lightCheck.toggle == true)
         {
             //Debug.Log("LimesectLoop while is running!");
             enemyHealth--;
             yield return null;
         }
         //Debug.Log("LimesectLoop has ended!");
-        lightAllow = Time.time + lightCD;
         yield break;
     }
     void Limsect()
@@ -249,33 +237,31 @@ public class EnemyInLight : MonoBehaviour
             random = Random.Range(0, 2);
         }
 
-        if (Time.time > lightAllow)
+        var playerDir = this.gameObject.transform.localPosition - playerObject.transform.position;
+
+        float angleRad = Mathf.Atan2(playerObject.transform.position.y - transform.position.y, playerObject.transform.position.x - transform.position.x);
+        // Get Angle in Degrees
+        float angleDeg = 180 / Mathf.PI * angleRad;
+        // Rotate Object
+        transform.rotation = Quaternion.Euler(0, 0, angleDeg - 90);
+
+        switch (random)
         {
-            var playerDir = this.gameObject.transform.localPosition - playerObject.transform.position;
-
-            float angleRad = Mathf.Atan2(playerObject.transform.position.y - transform.position.y, playerObject.transform.position.x - transform.position.x);
-            // Get Angle in Degrees
-            float angleDeg = 180 / Mathf.PI * angleRad;
-            // Rotate Object
-            transform.rotation = Quaternion.Euler(0, 0, angleDeg - 90);
-
-            switch (random)
-            {
-                case 0:
-                    //move right (x) and forward from local space when in light
-                    this.gameObject.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                    break;
-                case 1:
-                    this.gameObject.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                    break;
-                case 2:
-                    this.gameObject.transform.localPosition += (transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                    break;
-                case 3:
-                    this.gameObject.transform.localPosition += (-transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
-                    break;
-            }
+            case 0:
+                //move right (x) and forward from local space when in light
+                this.gameObject.transform.localPosition += (transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                break;
+            case 1:
+                this.gameObject.transform.localPosition += (-transform.right * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                break;
+            case 2:
+                this.gameObject.transform.localPosition += (transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                break;
+            case 3:
+                this.gameObject.transform.localPosition += (-transform.up * sideSpeed + -playerDir * scitterSpeed) * Time.deltaTime;
+                break;
         }
+
     }
     private bool CrowdCheck()
     {
