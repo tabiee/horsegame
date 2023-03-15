@@ -61,10 +61,12 @@ public class EnemyInLight : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         aiTarget = GetComponent<AIDestinationSetter>();
         enemyRB = GetComponent<Rigidbody2D>();
-        spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
         shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
         animator = transform.parent.GetComponentInChildren<Animator>();
-
+        if (this.tag == "Kelpie")
+        {
+            spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
+        }
         maxHealth = enemyHealth;
         aiPath.maxSpeed = internalSpeed;
     }
@@ -99,9 +101,11 @@ public class EnemyInLight : MonoBehaviour
             inLight = false;
         }
 
-        //keep the sprite in the right place
-        spriteRenderer.transform.position = transform.position;
-
+        if (this.tag == "Kelpie")
+        {
+            //keep the sprite in the right place
+            spriteRenderer.transform.position = transform.position;
+        }
         //calculate speed
         aiPath.maxSpeed = internalSpeed * internalModifier;
     }
