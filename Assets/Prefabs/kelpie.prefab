@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6176309900065058933
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2149479676399357036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.16, z: 0}
+  m_LocalPosition: {x: 0, y: -3.9, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -120,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4403791287730243495
 Transform:
   m_ObjectHideFlags: 0
@@ -356,7 +356,6 @@ MonoBehaviour:
   ripple: {fileID: 2149479676399357036}
   animatorRipple: {fileID: 6786928386173289892}
   resurfaceTimer: 0.75
-  lightCD: 0.35
   avoidCD: 0.45
   attackCD: 2
   splashParticles: {fileID: 3809225352425954790, guid: e1a40c61c91eb7c4d8e205402c405cab, type: 3}
@@ -396,6 +395,7 @@ GameObject:
   - component: {fileID: 4403791289188555327}
   - component: {fileID: 4403791289188555326}
   - component: {fileID: 287764163825814635}
+  - component: {fileID: 1067745630}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -497,4 +497,24 @@ MonoBehaviour:
   - {x: 3.9138584, y: -4.432722, z: 0}
   m_ShapePathHash: 1021801677
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1790
+  m_InstanceId: -1774
+--- !u!95 &1067745630
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4403791289188555324}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ee44e3a1b3c3723408600a3b49d51304, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
