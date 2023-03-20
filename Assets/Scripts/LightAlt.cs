@@ -40,7 +40,8 @@ public class LightAlt : MonoBehaviour
         else
         {
             //debug for OnTriggerExit not firing when the cone is disabled
-            transform.eulerAngles = new Vector3(90, 0, 0);
+            RotateLight();
+            transform.eulerAngles = new Vector3(90, 0, transform.eulerAngles.z);
         }
     }
     void RotateLight()
