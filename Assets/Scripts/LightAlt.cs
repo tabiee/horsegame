@@ -5,6 +5,7 @@ using UnityEngine;
 public class LightAlt : MonoBehaviour
 {
     [Header("General")]
+    [SerializeField] private float rotSpeed = 0.25f;
     [SerializeField] private float slowedSpeed = 0.6f;
     [SerializeField] private float wobbleSpeed = 1f;
     [SerializeField] private float wobbleStrength = 0.025f;
@@ -51,7 +52,8 @@ public class LightAlt : MonoBehaviour
 
         //rotate towards light
         Vector3 lightDirection = (mousePosition - transform.position).normalized;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, lightDirection);
+        Quaternion rot = Quaternion.LookRotation(Vector3.forward, lightDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotSpeed * Time.deltaTime);
 
         //get mouse direction by getting it's position and converting from world to local space
         mouseDir = transform.parent.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
