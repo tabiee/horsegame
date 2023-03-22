@@ -8,10 +8,14 @@ public class LoadDialogue : MonoBehaviour, IInteractable
 {
     [Header("Text Values")]
     public string[] lines;
-    [SerializeField] private Sprite artSprite;
     private GameObject playerDialogue;
     private GameObject playerTextbox;
     private Image loadSprite;
+
+    [Header("Sprite Values")]
+    public Sprite[] artSprite;
+    public int artState = 0;
+    [SerializeField] private int[] swapInAt;
 
     [Header("Player Scripts")]
     private RayInteraction rayInt;
@@ -19,6 +23,7 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     private DialogueRunner dialogueRun;
     private TextMeshProUGUI buttonSelect1;
     private TextMeshProUGUI buttonSelect2;
+    private LoadDialogue loadDialogue;
 
     [Header("Choice Values (Optional)")]
     public string[] choiceLines1;
@@ -42,6 +47,8 @@ public class LoadDialogue : MonoBehaviour, IInteractable
         buttonSelect1 = playerDialogue.transform.Find("Choice1").GetComponentInChildren<TextMeshProUGUI>();
         buttonSelect2 = playerDialogue.transform.Find("Choice2").GetComponentInChildren<TextMeshProUGUI>();
         loadSprite = playerDialogue.transform.Find("Image").GetComponent<Image>();
+
+        loadDialogue = GetComponent<LoadDialogue>();
     }
     public void Interact()
     {
@@ -112,7 +119,14 @@ public class LoadDialogue : MonoBehaviour, IInteractable
     {
         playerTextbox.SetActive(true);
         loadSprite.gameObject.SetActive(true);
-        loadSprite.sprite = artSprite;
+
+        dialogueRun.loadDialogue = loadDialogue;
+        dialogueRun.swapInAt = swapInAt;
+
+        if (artSprite[0] != null)
+        {
+            loadSprite.sprite = artSprite[0];
+        }
 
         if (choiceLines1.Length != 0 && untiedEvent != null)
         {

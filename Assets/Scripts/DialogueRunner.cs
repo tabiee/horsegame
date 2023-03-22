@@ -14,6 +14,10 @@ public class DialogueRunner : MonoBehaviour
     [SerializeField] private int index;
     public string[] lines;
 
+    [Header("Sprite Settings")]
+    public int[] swapInAt;
+    public int swapState = 0;
+
     //refs to object for activation/deactivation
     [Header("Scripts & Buttons")]
     [SerializeField] private RayInteraction rayInt;
@@ -21,6 +25,7 @@ public class DialogueRunner : MonoBehaviour
     [SerializeField] private Button choiceButton1;
     [SerializeField] private Button choiceButton2;
     [SerializeField] private Image image;
+    public LoadDialogue loadDialogue;
 
     //the LoadDialogue you interact with will load these values into here if multiple choice is available
     [Header("Choice Values")]
@@ -78,9 +83,19 @@ public class DialogueRunner : MonoBehaviour
             textGUI.text = string.Empty;
             StartCoroutine(TypeLine());
 
-            //could technically add support for an event/image swap during dialogue for each new line
+            if (swapInAt.Length != 0 && swapInAt[swapState] == (index + 1) && swapState < swapInAt.Length - 1)
+            {
+                Debug.Log("swap ran true!");
+
+                swapState++;
+                image.sprite = loadDialogue.artSprite[swapState];
+            }
+            else if (swapState == swapInAt.Length - 1)
+            {
+                image.sprite = loadDialogue.artSprite[swapState + 1];
+            }
+            //could technically add support for an event during dialogue for each new line
             //like LineEvent();
-            //and it has a sprite swapper and something else
         }
         //if theres no more text left, check if there is multi choice
         else
@@ -89,6 +104,10 @@ public class DialogueRunner : MonoBehaviour
             //and run any event if available from reference
             if (choiceLines1.Length == 0)
             {
+                swapState = 0;
+                loadDialogue = null;
+                swapInAt = null;
+
                 Invoke("EnablePlayer", 0.1f);
                 textGUI.text = string.Empty;
                 index = 0;

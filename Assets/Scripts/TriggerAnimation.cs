@@ -15,4 +15,8 @@ public class TriggerAnimation : MonoBehaviour
             once = true;
         }
     }
+    private void Update()
+    {
+        //play a sound here
+    }
 }
