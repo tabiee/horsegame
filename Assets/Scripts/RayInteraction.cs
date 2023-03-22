@@ -7,11 +7,18 @@ public class RayInteraction : MonoBehaviour
     [SerializeField] private RaycastHit2D hitData;
     [SerializeField] private LayerMask interactionLayer;
     [SerializeField] private float distance = 0.4f;
+
+    public bool activeLocation = true;
+    private Vector2 mousePos;
+    private Vector2 dir;
     void Update()
     {
         //grab mouse position
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = mousePos - (Vector2)transform.position;
+        if (activeLocation == true)
+        {
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            dir = mousePos - (Vector2)transform.position;
+        }
 
         //show the ray
         Debug.DrawRay(transform.position, dir.normalized, Color.red, 0.1f, false);

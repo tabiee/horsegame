@@ -77,6 +77,10 @@ public class DialogueRunner : MonoBehaviour
             index++;
             textGUI.text = string.Empty;
             StartCoroutine(TypeLine());
+
+            //could technically add support for an event/image swap during dialogue for each new line
+            //like LineEvent();
+            //and it has a sprite swapper and something else
         }
         //if theres no more text left, check if there is multi choice
         else
