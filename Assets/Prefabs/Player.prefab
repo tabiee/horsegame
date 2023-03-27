@@ -279,6 +279,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   distance: 0.4
+  activeLocation: 1
 --- !u!114 &3502650017476868625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +341,7 @@ MonoBehaviour:
   - {x: 0.0291503, y: -0.13953099, z: 0}
   m_ShapePathHash: -1158233063
   m_Mesh: {fileID: 0}
-  m_InstanceId: 29670
+  m_InstanceId: 71576
 --- !u!1 &3502650017252847981
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,11 +630,14 @@ MonoBehaviour:
   textSpeed: 0.03
   index: 0
   lines: []
+  swapInAt: 
+  swapState: 0
   rayInt: {fileID: 3502650017476868621}
   move: {fileID: 3502650017476868625}
   choiceButton1: {fileID: 3502650018966807503}
   choiceButton2: {fileID: 3502650018382413409}
   image: {fileID: 3502650019164263306}
+  loadDialogue: {fileID: 0}
   choicePause: 0
   choiceComplete: 0
   choiceLines1: []
@@ -1374,6 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575d76293641db4469e310109e8b618c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotSpeed: 2
   slowedSpeed: 0.45
   wobbleSpeed: 1
   wobbleStrength: 0.025
