@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float defaultSpeed = 1f;
     public float waterSpeedMultiplier = 0.25f;
     public float bushSpeedMultiplier = 0.5f;
-    public float rotationSpeed = 720f; //2 full circles per 1unit ingame?
+    public float rotationSpeed = 720f;
 
     private Rigidbody2D playerRb;
     public GameObject lightSource;
