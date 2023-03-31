@@ -11,6 +11,10 @@ public class RayInteraction : MonoBehaviour
     public bool activeLocation = true;
     private Vector2 mousePos;
     private Vector2 dir;
+
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField] private Material defaultMaterial;
+    private SpriteRenderer storedRenderer;
     void Update()
     {
         //grab mouse position
@@ -31,13 +35,16 @@ public class RayInteraction : MonoBehaviour
         {
             //Debug.Log(hitData.collider.gameObject.name);
 
+            storedRenderer = hitData.transform.GetComponent<SpriteRenderer>();
+
             //get the inherited interfaces from the hit object
             Component[] interactedObjects = hitData.transform.GetComponents(typeof(IInteractable));
             foreach (IInteractable interactedObject in interactedObjects)
             {
-
                 if (interactedObject != null)
                 {
+                    storedRenderer.material = outlineMaterial;
+
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         //Debug.Log("E pressed!");
@@ -45,7 +52,12 @@ public class RayInteraction : MonoBehaviour
                         interactedObject.Interact();
                     }
                 }
+
             }
+        }
+        else if (storedRenderer != null)
+        {
+            storedRenderer.material = defaultMaterial;
         }
     }
 }
