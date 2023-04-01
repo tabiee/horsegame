@@ -14,16 +14,12 @@ public class LightRecharge : MonoBehaviour
     [SerializeField] private Light2D coneLight;
     [SerializeField] private PolygonCollider2D lightCollider;
     [SerializeField] private LightCheck lightCheck;
+    [SerializeField] private ParticleSystem particles;
 
     [Header("Cooldown Settings")]
     [SerializeField] private float cooldown = 5f;
     private float cdAllow;
-
-    private float startPos;
-    private void Awake()
-    {
-        startPos = transform.position.z;
-    }
+    private bool once = false;
     void Update()
     {
         slider.value = CalculatePercentage();
@@ -39,6 +35,7 @@ public class LightRecharge : MonoBehaviour
                 lightCheck.toggle = true;
                 //lightCheck.enabled = true;
                 heat++;
+                ParticleEffect();
             }
             else
             {
@@ -59,6 +56,7 @@ public class LightRecharge : MonoBehaviour
                 {
                     slider.gameObject.SetActive(false);
                 }
+                once = false;
             }
         }
         else
@@ -71,6 +69,15 @@ public class LightRecharge : MonoBehaviour
             coneLight.enabled = false;
             lightCheck.toggle = false;
             slider.gameObject.SetActive(false);
+            once = false;
+        }
+    }
+    void ParticleEffect()
+    {
+        if (once == false)
+        {
+            once = true;
+            Instantiate(particles, transform.position, Quaternion.identity);
         }
     }
     float CalculatePercentage()
