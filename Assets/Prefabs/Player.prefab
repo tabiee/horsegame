@@ -280,6 +280,8 @@ MonoBehaviour:
     m_Bits: 64
   distance: 0.4
   activeLocation: 1
+  outlineMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 0}
 --- !u!114 &3502650017476868625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +343,7 @@ MonoBehaviour:
   - {x: 0.0291503, y: -0.13953099, z: 0}
   m_ShapePathHash: -1158233063
   m_Mesh: {fileID: 0}
-  m_InstanceId: 71576
+  m_InstanceId: 146004
 --- !u!1 &3502650017252847981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,7 +1281,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 0.1
   m_LightVolumeIntensityEnabled: 1
-  m_ApplyToSortingLayers: 000000008357eaa975f870df67dfbfa6fbfd95d94f763fa3
+  m_ApplyToSortingLayers: 000000008357eaa975f870df67dfbfa6fbfd95d9
   m_LightCookieSprite: {fileID: 21300000, guid: 95406b6737b66479a80d172766f8bac5, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1421,6 +1423,7 @@ MonoBehaviour:
   coneLight: {fileID: 3502650018393795475}
   lightCollider: {fileID: 3502650017476868620}
   lightCheck: {fileID: 3502650017476868619}
+  particles: {fileID: 0}
   cooldown: 5
 --- !u!1 &3502650018892948060
 GameObject:
