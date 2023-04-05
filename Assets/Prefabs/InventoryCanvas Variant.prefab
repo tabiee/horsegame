@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7375752942641476925, guid: 399cdd6d33c66834b8eb176aa00f9903, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7375752943787192323, guid: 399cdd6d33c66834b8eb176aa00f9903, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1230
@@ -115,7 +119,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Press keys from one to six to add an item
 
-        Press Esc to return
+        Press Tab to return
         to the game'
       objectReference: {fileID: 0}
     - target: {fileID: 7375752943918769752, guid: 399cdd6d33c66834b8eb176aa00f9903, type: 3}
