@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour {
+public class MainMenuController : MonoBehaviour
+{
 
     Animator anim;
 
@@ -19,7 +20,8 @@ public class MainMenuController : MonoBehaviour {
     public GameObject LoadGamePanel;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         anim = GetComponent<Animator>();
 
         //new key
@@ -42,7 +44,7 @@ public class MainMenuController : MonoBehaviour {
 
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-       
+
     }
 
     public void openStartGameOptions()
@@ -59,7 +61,7 @@ public class MainMenuController : MonoBehaviour {
 
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-        
+
     }
 
     public void openOptions_Game()
@@ -126,11 +128,8 @@ public class MainMenuController : MonoBehaviour {
 
     public void newGame()
     {
-        if (!string.IsNullOrEmpty(newGameSceneName))
-            SceneManager.LoadScene("ForestMap");
-        else
-            Debug.Log("Please write a scene name in the 'newGameSceneName' field of the Main Menu Script and don't forget to " +
-                "add that scene in the Build Settings!");
+        SceneManager.LoadScene("ForestMap");
+        SceneManager.LoadScene("CreepyThings", LoadSceneMode.Additive);
     }
     #endregion
 
@@ -142,7 +141,7 @@ public class MainMenuController : MonoBehaviour {
         anim.Play("buttonTweenAnims_off");
 
         //disable BLUR
-       // Camera.main.GetComponent<Animator>().Play("BlurOff");
+        // Camera.main.GetComponent<Animator>().Play("BlurOff");
 
         //play click sfx
         playClickSound();
@@ -152,7 +151,7 @@ public class MainMenuController : MonoBehaviour {
     {
         //simply play anim for CLOSING main options panel
         anim.Play("OptTweenAnim_off");
-        
+
         //play click sfx
         playClickSound();
 
@@ -167,10 +166,11 @@ public class MainMenuController : MonoBehaviour {
     #region Sounds
     public void playHoverClip()
     {
-       
+
     }
 
-    void playClickSound() {
+    void playClickSound()
+    {
 
     }
 

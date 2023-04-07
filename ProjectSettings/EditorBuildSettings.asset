@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ForestMap.unity
     guid: c70a1fe74c23f784cae2ecb7c75793d2
   - enabled: 1
+    path: Assets/Scenes/CreepyThings.unity
+    guid: f7225f361d25f1b4c96b14f1a384335f
+  - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 64b79aa598ae51343a1c5c1a8b0fd70d
   m_configObjects: {}

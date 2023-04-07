@@ -343,7 +343,7 @@ MonoBehaviour:
   - {x: 0.0291503, y: -0.13953099, z: 0}
   m_ShapePathHash: -1158233063
   m_Mesh: {fileID: 0}
-  m_InstanceId: 146004
+  m_InstanceId: 111186
 --- !u!1 &3502650017252847981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575d76293641db4469e310109e8b618c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 2
+  rotSpeed: 2.5
   slowedSpeed: 0.45
   wobbleSpeed: 1
   wobbleStrength: 0.025
