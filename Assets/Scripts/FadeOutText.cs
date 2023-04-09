@@ -6,14 +6,14 @@ using TMPro;
 public class FadeOutText : MonoBehaviour
 {
     [SerializeField] private float fadeoutTime = 3f;
-    [SerializeField] private TextMeshProUGUI textDisplay;
+    public TextMeshProUGUI textDisplay;
     public void Start()
     {
         textDisplay = GetComponent<TextMeshProUGUI>();
         StartCoroutine(FadeOut());
     }
 
-    private IEnumerator FadeOut()
+    public IEnumerator FadeOut()
     {
         float currentTime = 0f;
         while (currentTime < fadeoutTime)

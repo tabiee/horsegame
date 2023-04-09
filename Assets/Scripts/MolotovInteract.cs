@@ -1,13 +1,13 @@
 using UnityEngine;
 using SFInventory;
 
-public class MolotovInteract : MonoBehaviour
+public class MolotovInteract : MonoBehaviour, IInteractable
 {
     [SerializeField] SFInventoryItem item;
     [SerializeField] SFInventoryManager inventory;
     public GameObject bottle;
 
-    void OnCollisionEnter2D()
+    public void Interact()
     {
         Debug.Log("boink");
         inventory.AddItem(item, 1);
