@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 7e718b9d3f41afb4ba6a3c6d6f6771a6, type: 3}
   Name: Bottle
-  MaximumItemsCount: 64
+  MaximumItemsCount: 10
+  ItemType: 0
