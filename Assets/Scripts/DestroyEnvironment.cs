@@ -1,11 +1,11 @@
 using UnityEngine;
 using SFInventory;
 
-public class DestroyEnvironment : MonoBehaviour
+public class DestroyEnvironment : MonoBehaviour, IInteractable
 {
     public SFInventoryManager sFInventoryManager;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Interact()
     {
         bool bottlePresent = false;
         foreach (SFInventoryCell cell in sFInventoryManager.inventoryCells)

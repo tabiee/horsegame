@@ -35,15 +35,57 @@ public class ItemPickup : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        if (activated == false)
+        if (images.Length != 0)
         {
-            rayInt.activeLocation = false;
-            DisablePlayer();
-            activated = true;
-            activeImage.gameObject.SetActive(true);
-            activeImage.sprite = images[0];
-            spriteState++;
 
+            if (activated == false)
+            {
+                rayInt.activeLocation = false;
+                DisablePlayer();
+                activated = true;
+                activeImage.gameObject.SetActive(true);
+                activeImage.sprite = images[0];
+                spriteState++;
+
+                popupBox.textDisplay.text = text;
+                popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 255f);
+                StartCoroutine(popupBox.FadeOut());
+
+                //inventory stuff
+                if (inventory.GetFreeCell(out SFInventoryCell cell))
+                {
+                    Debug.Log("item taken");
+                    inventory.AddItem(item, 1);
+                }
+                else
+                {
+                    Debug.Log("no space in inventory");
+                }
+            }
+            else if (spriteState != images.Length)
+            {
+                activeImage.sprite = images[spriteState];
+                activeImage.sprite = images[spriteState++];
+            }
+            else
+            {
+
+                activeImage.sprite = images[spriteState];
+
+                rayInt.activeLocation = true;
+                spriteState = 0;
+                activated = false;
+                activeImage.gameObject.SetActive(false);
+                EnablePlayer();
+
+                if (inventory.GetFreeCell(out SFInventoryCell cell))
+                {
+                    bottle.SetActive(false);
+                }
+            }
+        }
+        else
+        {
             popupBox.textDisplay.text = text;
             popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 255f);
             StartCoroutine(popupBox.FadeOut());
@@ -53,31 +95,14 @@ public class ItemPickup : MonoBehaviour, IInteractable
             {
                 Debug.Log("item taken");
                 inventory.AddItem(item, 1);
+                bottle.SetActive(false);
             }
             else
             {
                 Debug.Log("no space in inventory");
             }
         }
-        else if (spriteState != images.Length)
-        {
-            activeImage.sprite = images[spriteState];
-            activeImage.sprite = images[spriteState++];
-        }
-        else
-        {
-            rayInt.activeLocation = true;
-            spriteState = 0;
-            activated = false;
-            activeImage.gameObject.SetActive(false);
-            activeImage.sprite = images[spriteState];
-            EnablePlayer();
 
-            if (inventory.GetFreeCell(out SFInventoryCell cell))
-            {
-                bottle.SetActive(false);
-            }
-        }
     }
     private void DisablePlayer()
     {
