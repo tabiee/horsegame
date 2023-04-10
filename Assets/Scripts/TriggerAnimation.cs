@@ -10,10 +10,16 @@ public class TriggerAnimation : MonoBehaviour
     [Header("If shouldDie is true")]
     [SerializeField] private float lifetime;
 
-    [Header("If shouldDie is false")]
+    [Header("If shouldDie is false", order = 1)]
+    [Space(-10, order = 2)]
+    [Header("Chance at 0 is 1 in 10 | 10%", order = 3)]
     [SerializeField] private float triggerCD;
+    [SerializeField] private int chance = 10;
+
     private bool once = false;
     private float cdAllow;
+
+    private int random;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" && once == false)
@@ -27,8 +33,13 @@ public class TriggerAnimation : MonoBehaviour
             }
             else if (Time.time > cdAllow)
             {
-                animator.SetTrigger("trigger");
-                cdAllow = Time.time + triggerCD;
+                random = Random.Range(chance, 11);
+
+                if (random == 10)
+                {
+                    animator.SetTrigger("trigger");
+                    cdAllow = Time.time + triggerCD;
+                }
             }
         }
     }
