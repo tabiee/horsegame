@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f643b4f0247174307a31c787ba4fb9d6, type: 2}
     - target: {fileID: 1312779417292632018, guid: 4e2cc68a60aeadc7294133b27bb32d51, type: 3}
       propertyPath: m_Name
-      value: redRock Variant
+      value: redRock Variant Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1836410093929477480, guid: 4e2cc68a60aeadc7294133b27bb32d51, type: 3}
       propertyPath: m_RootOrder
@@ -73,3 +73,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e2cc68a60aeadc7294133b27bb32d51, type: 3}
+--- !u!1 &1681956934515750370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1312779417292632018, guid: 4e2cc68a60aeadc7294133b27bb32d51, type: 3}
+  m_PrefabInstance: {fileID: 387431644303923760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5791478517271061235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681956934515750370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 000000008357eaa975f870df67dfbfa6fbfd95d94f763fa3
+  m_ShapePath:
+  - {x: -0.90597045, y: -0.59749854, z: 0}
+  - {x: -0.87355506, y: -0.22784424, z: 0}
+  - {x: 1.0819601, y: -0.11688244, z: 0}
+  - {x: 1.206011, y: -0.3575052, z: 0}
+  - {x: 1.0763507, y: -0.573187, z: 0}
+  - {x: 0.3202008, y: -0.7084609, z: 0}
+  - {x: -0.38483095, y: -0.7246686, z: 0}
+  m_ShapePathHash: -322862094
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 337038

@@ -61,14 +61,16 @@ public class EnemyInLight : MonoBehaviour
         aiPath = GetComponent<AIPath>();
         aiTarget = GetComponent<AIDestinationSetter>();
         enemyRB = GetComponent<Rigidbody2D>();
-        shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
-        animator = transform.parent.GetComponentInChildren<Animator>();
         if (this.tag == "Kelpie")
         {
+            animator = transform.parent.GetComponentInChildren<Animator>();
+            shadowCaster = transform.parent.GetComponentInChildren<ShadowCaster2D>();
             spriteRenderer = transform.parent.Find("Sprite").GetComponent<SpriteRenderer>();
         }
         maxHealth = enemyHealth;
         aiPath.maxSpeed = internalSpeed;
+
+        aiTarget.target = playerObject.transform;
     }
     private void FixedUpdate()
     {
