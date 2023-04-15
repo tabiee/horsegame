@@ -2,35 +2,41 @@ using UnityEngine;
 
 public class FootstepController : MonoBehaviour
 {
-    public AudioClip footstepSound; // a single footstep sound
-    public float footstepDelay = 0.3f; // the delay between each footstep sound
-    private float lastFootstepTime; // the time of the last footstep sound
+    public AudioClip footstepSound;
+    public float footstepDelay = 0.3f;
+    private float lastFootstepTime;
 
     private AudioSource audioSource;
+    private bool isPlaying;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.clip = footstepSound;
+        audioSource.loop = true;
     }
 
     private void Update()
     {
-        // check if the player is moving
         bool isMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
 
-        // check if enough time has passed since the last footstep sound
         if (isMoving && Time.time - lastFootstepTime > footstepDelay)
         {
-            // play the footstep sound
-            audioSource.PlayOneShot(footstepSound);
+            if (!isPlaying)
+            {
+                audioSource.Play();
+                isPlaying = true;
+            }
 
-            // set the time of the last footstep sound
             lastFootstepTime = Time.time;
         }
         else if (!isMoving)
         {
-            // stop the footstep sound if the player has stopped moving
-            audioSource.Stop();
+            if (isPlaying)
+            {
+                audioSource.Stop();
+                isPlaying = false;
+            }
         }
     }
 }
