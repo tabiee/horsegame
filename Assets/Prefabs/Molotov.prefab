@@ -111,9 +111,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.5773587}
-      - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+    - - {x: 0.19216523, y: 0.09876159}
+      - {x: 0.38161522, y: 0.36068797}
+      - {x: 0.2147311, y: 0.4716939}
+      - {x: -0.033637755, y: 0.15035684}
+      - {x: -0.37936473, y: 0.0034900047}
+      - {x: -0.43289387, y: -0.20941767}
+      - {x: -0.20051233, y: -0.45873028}
+      - {x: 0.17984085, y: -0.44546625}
+      - {x: 0.15106884, y: -0.19620976}
 --- !u!114 &7481527681790907860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images: []
-  text: yo you picked up a molotov cocktail! Eat the Bourgeosie
+  text: You picked up the sacred Molotov Cocktail! Perfect for vines
   item: {fileID: 11400000, guid: 655fb8bad664c404dad037fc5d45294c, type: 2}
   inventory: {fileID: 0}
   bottle: {fileID: 7481527681790907850}
