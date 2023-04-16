@@ -9,10 +9,22 @@ public class SpawnEnemies : MonoBehaviour
     [SerializeField] private int enemyAmount = 7;
     [SerializeField] private GameObject[] spawnLocations;
     [SerializeField] private string itemName;
+    [SerializeField] private int freezeTimer;
     public SFInventoryManager sFInventoryManager;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private float audioPitch = 1;
+
+    private MovementAlt move;
     private int spawnIndex;
     private bool once = false;
+
+    private void Start()
+    {
+        move = GameObject.Find("Player").GetComponent<MovementAlt>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -64,6 +76,35 @@ public class SpawnEnemies : MonoBehaviour
             Debug.Log("spawnloop running " + spawnIndex);
             yield return null;
         }
+        StartCoroutine(FreezePlayer());
         Debug.Log("spawnloop ended");
+    }
+    private IEnumerator FreezePlayer()
+    {
+        for (var i = 0; i < freezeTimer; i++)
+        {
+            DisablePlayer();
+
+            yield return null;
+        }
+
+        EnablePlayer();
+        audioSource.clip = audioClip;
+        audioSource.pitch = audioPitch;
+        audioSource.Play();
+    }
+
+    private void DisablePlayer()
+    {
+        move.rb.velocity = Vector2.zero;
+        move.moveDir.x = 0;
+        move.moveDir.y = 0;
+        move.enabled = false;
+        //lightAlt.enabled = false;
+    }
+    private void EnablePlayer()
+    {
+        move.enabled = true;
+        //lightAlt.enabled = false;
     }
 }

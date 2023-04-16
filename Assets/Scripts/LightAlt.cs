@@ -15,6 +15,9 @@ public class LightAlt : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Vector2 mouseDir;
     [SerializeField] private LightCheck lightCheck;
+
+    //fucking shit
+    private int rand;
     private void Awake()
     {
         //grab everything i need from the sprite object
@@ -33,6 +36,14 @@ public class LightAlt : MonoBehaviour
         //run animations
         Animate();
 
+        rand = Random.Range(0, 100);
+
+        //yet another fucking debug for that stupid ass bug
+        //if (rand <= 5)
+        //{
+        //    transform.eulerAngles = new Vector3(90, 0, transform.eulerAngles.z);
+        //}
+
         //handle light rotation & movement speed
         if (lightCheck.toggle == true)
         {
@@ -44,6 +55,7 @@ public class LightAlt : MonoBehaviour
             RotateLight();
             transform.eulerAngles = new Vector3(90, 0, transform.eulerAngles.z);
         }
+
     }
     void RotateLight()
     {
