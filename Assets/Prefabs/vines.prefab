@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7166002310620685871}
   - component: {fileID: 7166002310620685870}
   - component: {fileID: 7166002310620685869}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: vines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7166002310620685865}
-  m_LocalRotation: {x: -0, y: -0, z: 0.07086395, w: 0.99748605}
+  m_LocalRotation: {x: 0, y: 0, z: 0.070861995, w: 0.9974862}
   m_LocalPosition: {x: 8.05, y: 9.7, z: 0.00008603098}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1

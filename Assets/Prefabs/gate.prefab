@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8098459330421095273}
   - component: {fileID: 8098459330421095272}
   - component: {fileID: 576669456}
-  m_Layer: 0
+  - component: {fileID: 727473015}
+  m_Layer: 6
   m_Name: gate_door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1497374873
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2086f770030bc7f4d890366cc3d07555, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.2138443}
+  m_Offset: {x: 0, y: -2.8234954}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -109,8 +110,23 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.22, y: 2.6746175}
+  m_Size: {x: 6.22, y: 1.4553156}
   m_EdgeRadius: 0
+--- !u!114 &727473015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098459330421095274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68051140426c19e4984505c102890616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sFInventoryManager: {fileID: 0}
+  leftGate: {fileID: 8098459332404673803}
+  rightGate: {fileID: 8098459332242208211}
 --- !u!1 &8098459330665714725
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +138,8 @@ GameObject:
   - component: {fileID: 8098459330665714724}
   - component: {fileID: 8098459330665714723}
   - component: {fileID: 866789445}
-  m_Layer: 0
+  - component: {fileID: 980284327}
+  m_Layer: 6
   m_Name: gate_door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +201,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1497374873
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2086f770030bc7f4d890366cc3d07555, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -209,7 +226,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.1929188}
+  m_Offset: {x: 0, y: -2.8263907}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -220,8 +237,23 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.22, y: 2.7164686}
+  m_Size: {x: 6.22, y: 1.4495251}
   m_EdgeRadius: 0
+--- !u!114 &980284327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098459330665714725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68051140426c19e4984505c102890616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sFInventoryManager: {fileID: 0}
+  leftGate: {fileID: 8098459332404673803}
+  rightGate: {fileID: 8098459332242208211}
 --- !u!1 &8098459331505672304
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,8 +497,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8098459332218869076}
-  - component: {fileID: 8098459332218869075}
-  - component: {fileID: 1329031477}
   m_Layer: 0
   m_Name: gate
   m_TagString: Untagged
@@ -491,47 +521,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8098459332218869075
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098459332218869077}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 15.027722, y: 1.3784449}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9242954, y: 0.4649378}
-  m_EdgeRadius: 0
---- !u!114 &1329031477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098459332218869077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68051140426c19e4984505c102890616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sFInventoryManager: {fileID: 0}
-  leftGate: {fileID: 8098459332404673803}
-  rightGate: {fileID: 8098459332242208211}
 --- !u!1 &8098459332242208211
 GameObject:
   m_ObjectHideFlags: 0
