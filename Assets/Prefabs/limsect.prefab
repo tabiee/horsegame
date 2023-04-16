@@ -320,7 +320,7 @@ MonoBehaviour:
   kelpieSideSpeed: 0.65
   limsectSpeed: 0.9
   limsectSideSpeed: 2
-  enemyHealth: 100
+  enemyHealth: 30
   inLight: 0
   playerLayer:
     serializedVersion: 2
@@ -335,7 +335,7 @@ MonoBehaviour:
   avoidCD: 0.45
   attackCD: 3
   splashParticles: {fileID: 0}
-  internalSpeed: 1
+  internalSpeed: 0.75
   internalSlowed: 0.85
   attachDistance: 0.15
   deathParticles: {fileID: 3692963835449993043, guid: 13838b7c0e27ec940b2f1d1bd1c22f93, type: 3}

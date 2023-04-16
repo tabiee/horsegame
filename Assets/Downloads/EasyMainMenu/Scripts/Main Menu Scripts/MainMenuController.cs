@@ -128,8 +128,7 @@ public class MainMenuController : MonoBehaviour
 
     public void newGame()
     {
-        SceneManager.LoadScene("ForestMap");
-        SceneManager.LoadScene("CreepyThings", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Intro");
     }
     #endregion
 

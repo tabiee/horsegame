@@ -5,6 +5,7 @@ using UnityEngine;
 public class CreatureScare : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private Sprite chaseSprite;
     [SerializeField] private int chaseDuration = 5;
     [SerializeField] private GameObject poofParticles;
@@ -16,6 +17,8 @@ public class CreatureScare : MonoBehaviour
         if (collision.tag == "Player" && once == false)
         {
             spriteRenderer.sprite = chaseSprite;
+            audioSource.enabled = true;
+
             StartCoroutine(Chase());
             once = true;
         }

@@ -120,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4403791287730243495
 Transform:
   m_ObjectHideFlags: 0
@@ -340,11 +340,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc307ec23d941e34d99cdfad7361b709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kelpieSpeed: 0.4
-  kelpieSideSpeed: 0.2
+  kelpieSpeed: 0.2
+  kelpieSideSpeed: 0.1
   limsectSpeed: 0.9
   limsectSideSpeed: 1.1
-  enemyHealth: 30
+  enemyHealth: 7
   inLight: 0
   playerLayer:
     serializedVersion: 2
@@ -359,8 +359,8 @@ MonoBehaviour:
   avoidCD: 0.45
   attackCD: 2
   splashParticles: {fileID: 3809225352425954790, guid: e1a40c61c91eb7c4d8e205402c405cab, type: 3}
-  internalSpeed: 1
-  internalSlowed: 0.85
+  internalSpeed: 0.72
+  internalSlowed: 0.35
   attachDistance: 0.15
   deathParticles: {fileID: 3692963835449993043, guid: 13838b7c0e27ec940b2f1d1bd1c22f93, type: 3}
 --- !u!50 &4403791288744768204
@@ -412,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 4403791289188555324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.7705229, y: -0.055, z: 2.5250747}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6176309900065058933}
@@ -460,7 +460,7 @@ SpriteRenderer:
   m_SortingLayerID: -644481541
   m_SortingLayer: 4
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: c531fc0162b52b440af6890d74c2cab0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68293bcdd739d7e4581f640c756e7cf0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
   - {x: 3.9138584, y: -4.432722, z: 0}
   m_ShapePathHash: 1021801677
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1774
+  m_InstanceId: 434452
 --- !u!95 &1067745630
 Animator:
   serializedVersion: 5
