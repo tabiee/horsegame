@@ -48,19 +48,14 @@ public class ItemPickup : MonoBehaviour, IInteractable
                 spriteState++;
 
                 popupBox.textDisplay.text = text;
-                popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 255f);
-                StartCoroutine(popupBox.FadeOut());
+                popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 1f);
+                popupBox.TriggerFade();
 
                 //inventory stuff
-                if (inventory.GetFreeCell(out SFInventoryCell cell))
-                {
-                    Debug.Log("item taken");
-                    inventory.AddItem(item, 1);
-                }
-                else
-                {
-                    Debug.Log("no space in inventory");
-                }
+
+                Debug.Log("item taken");
+                inventory.AddItem(item, 1);
+
             }
             else if (spriteState != images.Length)
             {
@@ -78,29 +73,23 @@ public class ItemPickup : MonoBehaviour, IInteractable
                 activeImage.gameObject.SetActive(false);
                 EnablePlayer();
 
-                if (inventory.GetFreeCell(out SFInventoryCell cell))
-                {
-                    bottle.SetActive(false);
-                }
+
+                bottle.SetActive(false);
+
             }
         }
         else
         {
             popupBox.textDisplay.text = text;
-            popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 255f);
-            StartCoroutine(popupBox.FadeOut());
+            popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 1f);
+            popupBox.TriggerFade();
 
             //inventory stuff
-            if (inventory.GetFreeCell(out SFInventoryCell cell))
-            {
-                Debug.Log("item taken");
-                inventory.AddItem(item, 1);
-                bottle.SetActive(false);
-            }
-            else
-            {
-                Debug.Log("no space in inventory");
-            }
+
+            Debug.Log("item taken");
+            inventory.AddItem(item, 1);
+            bottle.SetActive(false);
+
         }
 
     }

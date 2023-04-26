@@ -10,6 +10,7 @@ public class SpawnEnemies : MonoBehaviour
     [SerializeField] private GameObject[] spawnLocations;
     [SerializeField] private string itemName;
     [SerializeField] private int freezeTimer;
+    [SerializeField] private string popupText;
     public SFInventoryManager sFInventoryManager;
 
     [Header("Audio")]
@@ -20,10 +21,13 @@ public class SpawnEnemies : MonoBehaviour
     private MovementAlt move;
     private int spawnIndex;
     private bool once = false;
-
+    private GameObject playerDialogue;
+    private FadeOutText popupBox;
     private void Start()
     {
         move = GameObject.Find("Player").GetComponent<MovementAlt>();
+        playerDialogue = GameObject.Find("Dialogue");
+        popupBox = playerDialogue.transform.Find("PopUp").GetComponent<FadeOutText>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -81,6 +85,10 @@ public class SpawnEnemies : MonoBehaviour
     }
     private IEnumerator FreezePlayer()
     {
+        popupBox.textDisplay.text = popupText;
+        popupBox.textDisplay.color = new Color(popupBox.textDisplay.color.r, popupBox.textDisplay.color.g, popupBox.textDisplay.color.b, 1f);
+        popupBox.TriggerFade();
+
         for (var i = 0; i < freezeTimer; i++)
         {
             DisablePlayer();

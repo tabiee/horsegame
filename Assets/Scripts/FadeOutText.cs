@@ -21,8 +21,17 @@ public class FadeOutText : MonoBehaviour
             float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeoutTime);
             textDisplay.color = new Color(textDisplay.color.r, textDisplay.color.g, textDisplay.color.b, alpha);
             currentTime += Time.deltaTime;
+
+            //Debug.Log("while loop running");
+            //Debug.Log("currentTime " + currentTime);
+            //Debug.Log("alpha " + alpha);
+
             yield return null;
         }
-        yield break;
+        //yield break;
+    }
+    public void TriggerFade()
+    {
+        StartCoroutine(FadeOut());
     }
 }

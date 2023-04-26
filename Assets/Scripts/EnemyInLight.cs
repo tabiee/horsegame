@@ -317,14 +317,15 @@ public class EnemyInLight : MonoBehaviour
 
 
         //if it hit something, run stuff
-        if (hitData.collider != null && hitData.collider.name == "Player")
+        if (hitData.collider != null && hitData.collider.name == "Player" && hitData.collider.isTrigger == false)
         {
-            //yes it's not behind anything, ray reached player with no obstacles
+            Debug.Log("yes it's not behind anything, ray reached player with no obstacles");
+
             return true;
         }
         else
         {
-            //no it's behind something, ray failed to reach the player
+            Debug.Log("no it's behind something, ray failed to reach the player");
             return false;
         }
     }
